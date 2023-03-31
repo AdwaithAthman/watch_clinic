@@ -1,0 +1,166 @@
+<style>
+    .error {
+        color: red
+    }
+
+    .signup-btn {
+        background: radial-gradient(circle, #e53637, #000000);
+        background-size: 200% 200%;
+        transition: background-position 0.5s;
+    }
+
+    .signup-btn:hover {
+        background-position: right bottom;
+    }
+
+    .signup-btn:active {
+        background-color: #b83e3e;
+    }
+</style>
+
+<div class="flex items-center min-h-screen p-6 bg-gray-50 ">
+    <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
+        <div class="flex flex-col overflow-y-auto md:flex-row">
+            <div class="h-32 md:h-auto md:w-1/2">
+                <img aria-hidden="true" class="object-cover w-full h-full" src="/admin/img/signup.jpg" alt="Office"
+                    style="object-fit:cover" />
+                <img aria-hidden="true" class="hidden object-cover w-full h-full " src="/admin/img/signup.jpg"
+                    alt="Office" />
+            </div>
+            <div class=" items-center justify-center p-6 sm:p-12 md:w-1/2">
+                <br>
+                <form action="/signup" method="post" style="width:100%" enctype="multipart/form-data" id="submit-form">
+                    <div class="w-full">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px">
+                            <h1 class=" text-xl font-semibold text-gray-700 text-center">
+                                Sign up to
+                            </h1>
+                            <img src="/users/img/logo.png" class="mb-2" lt="" style="height: 45px;">
+                        </div>
+                        <br>
+                        {{#if signupErr}}
+                        <div class="alert alert-danger text-center">
+                            <strong>{{signupErr}}</strong>
+                        </div>
+                        {{/if}}
+                        <label class="block text-sm" for="name">
+                            <span class="text-gray-700">Name</span>
+                            <input
+                                class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="Enter the Name" type="text" id="name" name="Name" required />
+                            <span id="name-error"></span>
+                        </label>
+                        <label class="block mt-4 text-sm" for="phone">
+                            <span class="text-gray-700">Phone</span>
+                            <input
+                                class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="Enter the Number" type="number" id="phone" name="Phone" required />
+                        </label>
+                        <label class="block mt-4 text-sm" for="email">
+                            <span class="text-gray-700">Email</span>
+                            <input
+                                class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="Enter the Email" type="email" id="email" name="Email" required />
+                            <span id="email-error"></span>
+                        </label>
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700">Password</span>
+                            <input
+                                class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="***************" type="password" id="password" name="Password" required />
+                        </label>
+                        <!-- You should use a button here, as the anchor is only used for the example  -->
+                        <button type="submit"
+                            class="block w-full px-4 py-2 mt-5 text-sm font-medium leading-5 text-center text-white border border-transparent rounded-lg focus:outline-none focus:shadow-outline-purple signup-btn">
+                            Sign up
+                        </button>
+                        <p class="mt-1 text-center">
+                            <a class="text-sm font-medium text-purple-600 hover:underline" href="/login" style="color: #e53637">
+                                Already have an account
+                            </a>
+                        </p>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    {{!--
+    <script src="./validate.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            jQuery.validator.addMethod(
+                "lettersonly",
+                function (value, element) {
+                    return this.optional(element) || /^[-a-zA-Z-()]+(\s+[-a-zA-Z-()]+)*$/.test(value);
+                },
+                "Letters only please"
+            );
+            jQuery.validator.addMethod(
+                "properemail",
+                function (value, element) {
+                    return this.optional(element) || /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/.test(value);
+                },
+                "Enter proper email"
+            );
+            jQuery.validator.addMethod(
+                "minlength4",
+                function (value, element) {
+                    return this.optional(element) || (value.trim().length >= 4);
+                },
+                "Minimum 4 characters without space"
+            );
+            $("#submit-form").validate({
+                rules: {
+                    Name: {
+                        minlength4: true,
+                        lettersonly: true,
+                        required: true,
+                        minlength: 4,
+                    },
+                    Email: {
+                        properemail: true,
+                        required: true,
+                        email: true,
+                    },
+                    Phone: {
+                        required: true,
+                        number: true,
+                        minlength: 10,
+                        maxlength: 10,
+                    },
+                    Password: {
+                        required: true,
+                        minlength: 3,
+                    }
+                },
+                messages: {
+                    Name: {
+                        minlength: "Please Enter Your Name",
+                    },
+                    Email: {
+                        Email: "Please enter a valid Email id",
+                    },
+                    Phone: {
+                        minlength: "Please enter a valid contact number",
+                        maxlength: "Please enter a valid contact number",
+                    },
+                    Password: {
+                        minlength: "Please enter a minimum 3 character"
+                    }
+                },
+                submitHandler: function (form) {
+                    console.log("True");
+                    console.log("in function submit");
+                    submit();
+                },
+            });
+        });
+
+    </script>

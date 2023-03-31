@@ -1,0 +1,383 @@
+<style>
+    a.add-cart {
+        cursor: pointer;
+    }
+
+    a.add-cart:hover {
+        color: red !important;
+    }
+
+    .heart-icon {
+        color: gray;
+    }
+
+    .heart-icon.red {
+        color: red;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+
+<link rel="stylesheet" href="./users/css/home.css" type="text/css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+<!-- Css Styles of user -->
+<link rel="stylesheet" href="./users/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="./users/css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="./users/css/magnific-popup.css" type="text/css">
+<link rel="stylesheet" href="./users/css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="./users/css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="./users/css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="./users/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="./users/css/style.css" type="text/css">
+{{!--
+<form method="post" id="form-id">
+    <input id="new-input" type="text" hidden />
+    <button id="new-button" type="submit" hidden></button>
+</form> --}}
+
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="hero__slider owl-carousel">
+        {{#each headBanners}}
+        <div class="hero__items set-bg" data-setbg="./users/img/hero/{{this._id}}.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-7 col-md-8">
+                        <div class="hero__text">
+                            <h6>{{this.tagline}}</h6>
+                            <h2>{{this.mainHeading}}</h2>
+                            <p>{{this.description}}</p>
+                            <a href="{{this.redirectLink}}" class="primary-btn">Shop now <span
+                                    class="arrow_right"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- Banner Section Begin -->
+<section class="banner spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 offset-lg-4">
+                <div class="banner__item ">
+                    <div class="banner__item__pic">
+                        <img src="./users/img/banner/banner-1.png" alt=""
+                            style="width:440px; height:440px; object-fit: cover;">
+                    </div>
+                    <div class="banner__item__text">
+                        <h2>Best collection for Men</h2>
+                        <a href="/shop-category?id={{firstCategory._id}}">Shop now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="banner__item banner__item--middle">
+                    <div class="banner__item__pic">
+                        <img src="./users/img/banner/banner-2.png" alt=""
+                            style="width:470px; height:470px; object-fit: cover;">
+                    </div>
+                    <div class="banner__item__text" style="max-width: 60%;">
+                        <h2>Best collection for Women</h2>
+                        <a href="/shop-category?id={{secondCategory._id}}">Shop now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="banner__item banner__item--last">
+                    <div class="banner__item__pic">
+                        <img src="./users/img/banner/banner-3.png" alt=""
+                            style="width:480px; height:440px; object-fit: cover;">
+                    </div>
+                    <div class="banner__item__text">
+                        <h2>Best Unisex collection</h2>
+                        <a href="/shop-category?id={{thirdCategory._id}}">Shop now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Section End -->
+
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="filter__controls">
+                    <li class="active" data-filter="*" style="font-size: 20px;">ALL</li>
+                    {{#each categories}}
+                    <li data-filter=".{{this.Category}}" style="font-size: 20px;">{{this.Category}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        <div class="row product__filter ">
+            {{#each products}}
+            <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix {{this.categoryName}}">
+                <div class="product__item">
+                    <div class="border border-1" style="position:relative">
+                        <div class="product__item__pic set-bg" data-setbg="/product-images/{{this._id}}.jpg"
+                            style="background-size: contain">
+                            {{#if this.catOfferPercentage}}
+                            <span class="label text-bg-danger">{{this.catOfferPercentage}}% Off</span>
+                            {{else if this.productOfferPercentage}}
+                            <span class="label text-bg-danger">{{this.productOfferPercentage}}% Off</span>
+                            {{else}}
+                            <span class="label text-bg-danger">New</span>
+                            {{/if}}
+                            <ul class="product__hover" id="wishlist-section">
+                                {{#if this.isInWishlist}}
+                                <li style="z-index:2"><a onclick="addToWishlist('{{this._id}}')"><i
+                                            class="fa fa-heart fa-lg"
+                                            style="cursor: pointer; color:red;"></i></a><span>Wishlist</span></li>
+
+                                {{else}}
+                                <li style="z-index:2"><a onclick="addToWishlist('{{this._id}}')"><i
+                                            class="fa fa-heart heart-icon fa-lg"
+                                            style="cursor: pointer; color:grey;"></i></a><span>Wishlist</span></li>
+                                {{/if}}
+                            </ul>
+                        </div>
+                        {{!-- child div --}}
+                        <a href="/product?id={{this._id}}">
+                            <div
+                                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; z-index: 1;background-color: rgba(255, 255, 255, 0);">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="product__item__text">
+                        <h6>{{this.Name}}</h6>
+                        {{!-- <a href="/add-to-cart/{{this._id}}" class="add-cart">+ Add To Cart</a> --}}
+                        <a onclick="addToCart('{{this._id}}','{{this.Stock}}')" class="add-cart"
+                            style="color: #e61d31e8; hover: ">+ Add
+                            To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        {{#if this.actualPrice }}
+                        <div class="d-flex gap-2">
+                            <h5>₹ {{this.Price}}</h5>
+                            <strike style="font-size: 13px; color: gray;">₹ {{this.actualPrice}}</strike>
+                        </div>
+                        {{else}}
+                        <h5>₹ {{this.Price}}</h5>
+                        {{/if}}
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                    {{#if fewStock}}
+                    <p class="text-danger text-center">Only Few Available!</p>
+                    {{/if}}
+                    {{#if noStock}}
+                    <p class="text-danger text-center">Out Of Stock!</p>
+                    {{/if}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
+
+<!-- Deal of the week Begin -->
+<section class="hero">
+    <div class="hero__slider owl-carousel">
+
+        {{#each allDealsWithProductInfo}}
+        <div class="hero__items" style="padding-top: 0px; height: 730px;">
+            <section class="categories spad">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="categories__text">
+                                <h2 style="font-size:30px; font-family: 'Permanent Marker', cursive;">{{this.catchPhrase}}</h2>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="categories__hot__deal">
+                                <img src="/product-images/{{this.productInfo.0._id}}.jpg" alt="" height="350px"
+                                    width="250px" style="object-fit:contain">
+                                <div class="hot__deal__sticker">
+                                    <span>Sale Of</span>
+                                    <h5>₹{{this.productInfo.0.Price}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="endDate{{this._id}}" hidden>{{this.Datetime-validity}}</div>
+                        <div class="col-lg-4 offset-lg-1">
+                            <div class="categories__deal__countdown">
+                                <span>{{this.caption}}</span>
+                                <h2 style="font-size:30px">{{this.ProductName}}</h2>
+                                <div class="exclusiveDealId" hidden>{{this._id}}</div>
+                                <p class="pb-3">
+                                    {{this.productInfo.0.Description}}
+                                </p>
+                                <a href="/product?id={{this.productInfo.0._id}}" class="primary-btn">Shop now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        {{/each}}
+
+    </div>
+</section>
+<!-- Categories Section End -->
+
+<!-- Instagram Section Begin -->
+<section class="spad pt-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="instagram__pic">
+                    <div class="instagram__pic__item set-bg" data-setbg="./users/img/instagram/instagram-1.jpg"></div>
+                    <div class="instagram__pic__item set-bg" data-setbg="./users/img/instagram/instagram-2.jpg"></div>
+                    <div class="instagram__pic__item set-bg" data-setbg="./users/img/instagram/instagram-3.jpg"></div>
+                    <div class="instagram__pic__item set-bg" data-setbg="./users/img/instagram/instagram-4.jpg"></div>
+                    <div class="instagram__pic__item set-bg" data-setbg="./users/img/instagram/instagram-5.jpg"></div>
+                    <div class="instagram__pic__item set-bg" data-setbg="./users/img/instagram/instagram-6.jpg"></div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="instagram__text">
+                    <h2>Instagram</h2>
+                    <p>"Time is on your side with Watch Clinic ⌚ Discover the latest in watch fashion and functionality.
+                        From sporty to sophisticated, our timepieces have got you covered.
+                        Shop now and make every second count!"</p>
+                    <h3>#Watch_Clinic</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Instagram Section End -->
+
+
+
+<script src="./users/js/bootstrap.min.js"></script>
+<script src="./users/js/jquery.nice-select.min.js"></script>
+<script src="./users/js/jquery.nicescroll.min.js"></script>
+<script src="./users/js/jquery.magnific-popup.min.js"></script>
+<script src="./users/js/jquery.countdown.min.js"></script>
+<script src="./users/js/jquery-3.3.1.min.js"></script>
+<script src="./users/js/jquery.slicknav.js"></script>
+<script src="./users/js/mixitup.min.js"></script>
+<script src="./users/js/owl.carousel.min.js"></script>
+<script src="./users/js/main.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+
+<script>
+    addToCart = (productId, productStock) => {
+        const stock = parseInt(productStock)
+        if (stock === 0) {
+            swal({
+                icon: "error",
+                title: "Oops..!",
+                text: "Out Of Stock!",
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        }
+        else {
+            $.ajax({
+                url: '/add-to-cart/' + productId,
+                method: 'get',
+                success: (response) => {
+                    if (response.maxLimit) {
+                        swal({
+                            title: "Max Limit Reached",
+                            icon: "warning",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    }
+                    else if (response.status) {
+                        let count = $('.cart-count').html()
+                        count = parseInt(count) + 1
+                        $('.cart-count').html(count)
+                        swal("Successfully added to Cart", {
+                            icon: "success",
+                        }).then(() => {
+                            // Store the current scroll position
+                            sessionStorage.setItem('scrollPosition', window.pageYOffset);
+                            location.reload()
+                            // Restore the scroll position after the page reloads
+                            window.scrollTo(0, sessionStorage.getItem('scrollPosition'));
+                        });
+
+                    }
+                    else {
+                        location.href = '/login'
+                    }
+                }
+            })
+        }
+    }
+</script>
+
+
+<script>
+    addToWishlist = (productId) => {
+
+        $.ajax({
+            url: '/add-to-wishlist/' + productId,
+            method: 'get',
+            success: (response) => {
+                if (response.add) {
+                    //heartIcon.classList.add('red');
+                    let count = $('.wishlist-count').html()
+                    count = parseInt(count) + 1
+                    $('.wishlist-count').html(count)
+                    swal("Successfully added to Wishlist", {
+                        icon: "success",
+                    }).then(() => {
+                        // Reloading the wishlist section of the page
+                        location.reload()
+                    });
+
+                }
+                else if (response.remove) {
+                    //heartIcon.classList.remove('red');
+                    let count = $('.wishlist-count').html()
+                    count = parseInt(count) - 1
+                    $('.wishlist-count').html(count)
+                    swal("The Product has been removed from the Wishlist")
+                        .then(() => {
+                            // Reloading the wishlist section of the page
+                            location.reload()
+                        });
+                }
+                else {
+                    location.href = '/login'
+                }
+            }
+        })
+
+    }
+</script>

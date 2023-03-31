@@ -1,0 +1,137 @@
+<main class="h-full overflow-y-auto justify-content-center" style="overflow-x:hidden">
+    <div class="container" style="padding: 0px 20px 0px 20px;">
+
+        <section>
+            <div class="container">
+                <form action="/admin/admin-edit-product?id={{productDetails._id}}" method="post" enctype="multipart/form-data">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                            Edit Product
+                        </h2>
+                        <button
+                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                            type="submit">
+                            Update
+                        </button>
+                    </div>
+
+                    <div class="row border border-1">
+
+                        <div class="col-md-6 px-5 py-5">
+                                <div class="w-full">
+                                    <h1 class=" text-xl font-semibold text-gray-700">
+                                        Enter Product details:
+                                    </h1>
+                                    <br>
+                                    <label class="block text-sm" for="name">
+                                        <span class="text-gray-700">Name</span>
+                                        <input
+                                            class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                            placeholder="Enter the Name" type="text" id="name" name="Name" value="{{productDetails.Name}}"
+                                            onkeyup="validateName()" />
+                                        <span id="name-error"></span>
+                                    </label>
+                                    <label class="block mt-4 text-sm" for="price">
+                                        <span class="text-gray-700">Price</span>
+                                        <input
+                                            class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                            placeholder="Enter the price in ₹" type="number" id="price" name="Price" value="{{productDetails.Price}}"
+                                            onkeyup="" />
+                                    </label>
+                                    <label class="block mt-4 text-sm" for="description">
+                                        <span class="text-gray-700">Description</span>
+                                        <textarea rows="5" cols="50"
+                                            class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                            placeholder="Enter the description" id="description" style="resize: none"
+                                            name="Description" >{{productDetails.Description}}</textarea>
+
+                                        <span id="email-error"></span>
+                                    </label>
+                                    <label class="block mt-4 text-sm" for="stock">
+                                        <span class="text-gray-700">Stock</span>
+                                        <input
+                                            class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                            placeholder="Enter the stock"  type="number" id="stock" name="Stock" value="{{productDetails.Stock}}"
+                                            onkeyup="" />
+                                    </label>
+                                    <label class="block mt-4 text-sm d-flex align-items-center gap-3">
+                                        <span class="text-gray-700 dark:text-gray-400">
+                                            Category
+                                        </span>
+                                        <select name="Category" id="category" class="border border-1">
+                                            {{#each categoryList}}
+                                            <option class="text-start" value="{{this._id}}">{{this.Category}}</option>
+                                            {{/each}}
+                                        </select>
+                                </div>
+
+                        </div>
+                        <div class="col-md-6 px-5 py-5">
+                                <div class="w-full">
+                                    <h1 class=" text-xl font-semibold text-gray-700 ">
+                                        Upload Images here:
+                                    </h1>
+                                </div>
+                                <br>
+                                <label class="block text-sm">
+                                    <div class="d-flex flex-column gap-2">
+                                    <span class="text-gray-700 dark:text-gray-400">Image 1</span>
+                                    <img src="/product-images/{{productDetails._id}}.jpg" alt="" style="width: 75px; height:75px;" class="object-cover pb-2" id="imgView1">
+                                    </div>
+                                    <input
+                                        class="form-control block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                        placeholder="Image 1" type="file" name="Image1" onchange="viewImage1(event)" />
+                                </label>
+                                <label class="block mt-4 text-sm">
+                                    <div class="d-flex flex-column gap-2">
+                                    <span class="text-gray-700 dark:text-gray-400">Image 2</span>
+                                    <img src="/product-images/{{productDetails._id}}2.jpg" alt="" style="width: 75px; height:75px;" class="object-cover pb-2" id="imgView2">
+                                    </div>
+                                    <input
+                                        class="form-control block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                        placeholder="Image 2" type="file" name="Image2" onchange="viewImage2(event)" />
+                                </label>
+                                <label class="block mt-4 text-sm">
+                                    <div class="d-flex flex-column gap-2">
+                                    <span class="text-gray-700 dark:text-gray-400">Image 3</span>
+                                    <img src="/product-images/{{productDetails._id}}3.jpg" alt="" style="width: 75px; height:75px;" class="object-cover pb-2" id="imgView3">
+                                    </div>
+                                    <input
+                                        class="form-control block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                        placeholder="Image 3" type="file" name="Image3" onchange="viewImage3(event)" />
+                                </label>
+                                <label class="block mt-4 text-sm">
+                                    <div class="d-flex flex-column gap-2">
+                                    <span class="text-gray-700 dark:text-gray-400">Image 4</span>
+                                    <img src="/product-images/{{productDetails._id}}4.jpg" alt="" style="width: 75px; height:75px;" class="object-cover pb-2" id="imgView4">
+                                    </div>
+                                    <input
+                                        class="form-control block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                        placeholder="Image 4" type="file" name="Image4" onchange="viewImage4(event)" />
+                                </label>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+    </div>
+    </div>
+</main>
+
+<script>
+    viewImage1=(event)=>{
+        document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+    }
+    viewImage2=(event)=>{
+        document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+    }
+    viewImage3=(event)=>{
+        document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+    }
+    viewImage4=(event)=>{
+        document.getElementById('imgView4').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>

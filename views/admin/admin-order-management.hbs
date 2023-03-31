@@ -1,0 +1,162 @@
+<style>
+    #orderManagementTable_length {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+        position: sticky;
+        z-index: 10;
+        left: 0;
+        background-color: #f9fafb;
+    }
+
+    #orderManagementTable_length select{
+        background-color: white;
+    }
+
+    #orderManagementTable_filter {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+    }
+
+    #orderManagementTable_filter input{
+        background-color: white;
+    }
+
+    #orderManagementTable_info {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+        position: sticky;
+        z-index: 10;
+        left: 0;
+        background-color: #f9fafb;
+    }
+
+    #orderManagementTable_paginate {
+        font-size: 14px;
+        padding: 7.5px 15px 0px 15px;
+    }
+
+    table {
+        border-width: 1px
+    }
+
+    tbody,
+    td,
+    tfoot,
+    th,
+    thead,
+    tr {
+        border-color: inherit;
+        border-style: solid;
+        border-width: 0.5px;
+        column
+    }
+
+</style>
+
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container grid px-6 mx-auto">
+        <div class="d-flex align-items-center justify-content-between">
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Order List
+            </h2>
+        </div>
+
+        <!-- With avatar -->
+        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table id="orderManagementTable" class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3" style="position:sticky; z-index:10; left: 0; background-color: white;">Order ID</th>
+                            <th class="px-4 py-3">Shipping Address</th>
+                            <th class="px-4 py-3 text-center">View All</th>
+                            <th class="px-4 py-3 text-center">Amount</th>
+                            <th class="px-4 py-3 text-center">Payment</th>
+                            <th class="px-4 py-3 text-center">Status</th>
+                            <th class="px-4 py-3 text-center">Delivery</th>
+                            <th class="px-4 py-3 text-center">Save</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        {{#each allOrderDetails}}
+                        <tr class="text-gray-700 dark:text-gray-400">
+                            <form action="/admin/edit-status/{{this._id}}" method="post">
+                                <td class="px-2 py-3" style="position:sticky; z-index:10; left: 0; background-color: #f9fafb; max-width: 175px">
+                                    <div class="flex items-center text-sm">
+                                        <!-- Avatar with inset shadow -->
+                                        <div>
+                                            <p class="font-semibold">{{this._id}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-2 py-3 text-sm text-wrap" style="max-width: 300px">
+                                    {{this.deliveryDetails.addressLine_1}}<br>{{this.deliveryDetails.addressLine_2}}<br>{{this.deliveryDetails.city}},
+                                    {{this.deliveryDetails.state}}<br>Pin: {{this.deliveryDetails.postcode}}
+                                </td>
+                                <td class="px-2 py-3 text-xs text-center"><a href="/admin/order-details/{{this._id}}">
+                                        <span
+                                            class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-blue-100">
+                                            View Details
+                                        </span></a>
+                                </td>
+                                <td class="px-2 py-3 text-sm text-center">
+                                    ₹{{this.totalAmount}}
+                                </td>
+                                <td class="px-2 py-3 text-sm text-center">
+                                    {{this.paymentMethod}}
+                                </td>
+                                <td class="px-2 py-3 text-sm text-center">
+                                    {{this.status}}
+                                </td>
+                                {{#if this.Cancelled}}
+                                    <td class="px-2 py-3 text-sm text-center" style="color: red; font-weight: bold;">{{this.status}}</td>
+                                {{else if this.Delivered}}
+                                    <td class="px-2 py-3 text-sm text-center" style="color: green; font-weight: bold;">{{this.status}}</td>
+                                {{else if this.Returned}}
+                                    <td class="px-2 py-3 text-sm text-center" style="color: rgb(117, 128, 0); font-weight: bold;">{{this.status}}</td>
+                                {{else}}
+                                <td class="px-2 py-3 text-center" style="font-size: .75rem;">
+                                    <select aria-label="Default select example"
+                                        class="font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:bg-orange-700 dark:text-orange-100"
+                                        style="padding:4px 0px 4px 8px" name="status" id="status">
+                                        <option value="{{this.status}}">{{this.status}}</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                        <option value="Delivered">Delivered</option>
+                                        <option value="Shipped">Shipped</option>
+                                        <option value="Placed">Placed</option>
+                                    </select>
+                                </td>
+                                {{/if}}
+
+                                {{#if this.Cancelled}}
+                                <td class="px-2 py-3 text-sm text-center" style="color: red; font-weight: bold;">{{this.status}}</td>
+                                {{else if this.Delivered}}
+                                <td class="px-2 py-3 text-sm text-center" style="color: green; font-weight: bold;">{{this.status}}</td>
+                                {{else if this.Returned}}
+                                <td class="px-2 py-3 text-sm text-center" style="color: rgb(117, 128, 0); font-weight: bold;">{{this.status}}</td>
+                                {{else}}
+                                <td class="px-2 py-3 text-xs text-center"><button type="submit">
+                                        <span
+                                            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-700">
+                                            Save Status
+                                        </span></a>
+                                    
+                                </button><a href="">
+                                </td>
+                                {{/if}}
+                            </form>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    $(document).ready(function () {
+        $('#orderManagementTable').DataTable();
+    });
+</script>

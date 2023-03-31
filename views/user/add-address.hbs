@@ -1,0 +1,238 @@
+<style>
+    .error {
+        color: red;
+    }
+
+    .checkout__input input {
+        color: #000000d6 !important;
+    }
+</style>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Add Address</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<div class="container text-center py-4">
+    <div class="col-xl-8 pb-4 mb-1">
+        <!-- Account details card-->
+        <div class="card mb-4 text-start">
+            <div class="card-header"><strong>Add New Address</strong></div>
+            <div class="card-body">
+                <form id="addressForm">
+                    <div class="col-lg-12 col-md-12 px-5">
+                        <input type="text" name="UserId" id="" value="{{singleUser._id}}" hidden>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>First Name<span>*</span></p>
+                                    <input type="text" id="first-name" name="FirstName" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Last Name<span>*</span></p>
+                                    <input type="text" id="last-name" name="LastName" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Country<span>*</span></p>
+                            <input type="text" id="country" name="Country" required>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Address<span>*</span></p>
+                            <input type="text" placeholder="Street Address" class="checkout__input__add"
+                                id="address-line-1" name="AddressLine1" required>
+                            <input type="text" placeholder="Apartment, suite, unit etc (optional)" id="address-line-2"
+                                name="AddressLine2" class="mt-4" required>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Town/City<span>*</span></p>
+                            <input type="text" id="city" name="City" required>
+                        </div>
+                        <div class="checkout__input">
+                            <p>State<span>*</span></p>
+                            <input type="text" id="state" name="State" required>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Postcode / ZIP<span>*</span></p>
+                            <input type="number" id="postcode" name="Postcode" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Phone<span>*</span></p>
+                                    <input type="number" id="phone" name="Phone" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Email<span>*</span></p>
+                                    <input type="email" id="email" name="Email" required>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary my-2 px-4" onclick="saveAddress()" type="button">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Js Plugins -->
+<script src="./users/js/jquery-3.3.1.min.js"></script>
+<script src="./users/js/bootstrap.min.js"></script>
+<script src="./users/js/jquery.nice-select.min.js"></script>
+<script src="./users/js/jquery.nicescroll.min.js"></script>
+<script src="./users/js/jquery.magnific-popup.min.js"></script>
+<script src="./users/js/jquery.countdown.min.js"></script>
+<script src="./users/js/jquery.slicknav.js"></script>
+<script src="./users/js/mixitup.min.js"></script>
+<script src="./users/js/owl.carousel.min.js"></script>
+<script src="./users/js/main.js"></script>
+
+<script>
+
+    saveAddress = () => {
+        if ($('#first-name').val() !== '' && $('#last-name').val() !== '' && $('#country').val() !== '' && $('#address-line-1').val() !== '' && $('#city').val() !== '' && $('#state').val() !== '' && $('#postcode').val() !== '' && $('#phone').val() !== '' && $('#email').val() !== '') {
+            $.ajax({
+                url: '/save-address',
+                method: 'patch',
+                data: $('#addressForm').serialize(),
+                success: (response) => {
+                    swal({
+                        title: "Saved",
+                        text: "New address has been added successfully!",
+                        icon: "success"
+                    }).then(() => {
+                        window.location.href = '/checkout';
+                    });
+                }
+            })
+        }
+        else {
+            swal({
+                title: "Make sure all address fields are added",
+                icon: "warning",
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        }
+    }
+</script>
+
+
+{{!-- validation --}}
+<script>
+    $(document).ready(function () {
+        jQuery.validator.addMethod(
+            "lettersonly",
+            function (value, element) {
+                return this.optional(element) || /^[-a-zA-Z-()]+(\s+[-a-zA-Z-()]+)*$/.test(value);
+            },
+            "Letters only please"
+        );
+        jQuery.validator.addMethod(
+            "properemail",
+            function (value, element) {
+                return this.optional(element) || /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)$/.test(value);
+            },
+            "Enter proper email"
+        );
+        jQuery.validator.addMethod(
+            "minlength4",
+            function (value, element) {
+                return this.optional(element) || (value.trim().length >= 4);
+            },
+            "Minimum 4 characters without space"
+        );
+        $("#addressForm").validate({
+            rules: {
+                FirstName: {
+                    lettersonly: true,
+                    required: true,
+                },
+                LastName: {
+                    lettersonly: true,
+                    required: true,
+                },
+                Country: {
+                    lettersonly: true,
+                    required: true,
+                },
+                AddressLine1: {
+                    minlength4: true,
+                    required: true,
+                    minlength: 4,
+                },
+                AddressLine2: {
+                    minlength4: true,
+                    required: true,
+                    minlength: 4,
+                },
+                City: {
+                    lettersonly: true,
+                    required: true,
+                },
+                State: {
+                    lettersonly: true,
+                    required: true,
+                },
+                Phone: {
+                    required: true,
+                    number: true,
+                    minlength: 10,
+                    maxlength: 10,
+                },
+                Postcode: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 6,
+                },
+                Email: {
+                    properemail: true,
+                    required: true,
+                    email: true,
+                },
+            },
+            messages: {
+                AddressLine1: {
+                    minlength: "Please enter your address",
+                },
+                AddressLine2: {
+                    minlength: "Please enter your address",
+                },
+                Phone: {
+                    minlength: "Please enter a valid contact number",
+                    maxlength: "Please enter a valid contact number",
+                },
+                Postcode: {
+                    minlength: "Please enter a minimum 6 character"
+                }
+            },
+            submitHandler: function (form) {
+                console.log("True");
+                console.log("in function submit");
+                submit();
+            },
+        });
+    });
+
+</script>

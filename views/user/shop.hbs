@@ -1,0 +1,427 @@
+<style>
+    #menu li {
+        cursor: pointer;
+    }
+
+    .category-dropdown:hover,
+    .category-dropdown.clicked {
+        color: white;
+        background-color: #b7b7b7;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 10px;
+        padding-top: 7px;
+        padding-bottom: 2px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+
+    a.add-cart {
+        cursor: pointer;
+    }
+
+    a.add-cart:hover {
+        color: red !important;
+    }
+
+    #search-input {
+
+        padding-right: 38px;
+        /* add padding to create space for the icon */
+        box-sizing: border-box;
+        /* include padding in element's width */
+    }
+
+    .heart-icon {
+        color: gray;
+    }
+
+    .heart-icon.red {
+        color: red;
+    }
+</style>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shop</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <span>Shop</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shop Section Begin -->
+<section class="shop spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="shop__sidebar">
+                    <div class="shop__sidebar__search">
+                        <form id="search-form" class="pb-1">
+                            {{#if query}}
+                            <input id="search-input" type="text" placeholder="Search..." value="{{query}}">
+                            {{else}}
+                            <input id="search-input" type="text" placeholder="Search...">
+                            {{/if}}
+                            <button id="search-button" type="submit"><span class="icon_search"></span></button>
+                        </form>
+                        <div id="search-results" style="background-color:black"></div>
+                    </div>
+                    <div class="shop__sidebar__accordion">
+                        <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                </div>
+                                <div id="collapseOne" class="collapse show px-2" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories">
+                                            <ul class="nice-scroll product-filters" id="menu">
+                                                <li class="active py-1 pl-3 category-dropdown border"
+                                                    style="font-size:15px" data-filter="*">ALL</li>
+                                                {{#each categories}}
+                                                <li id="{{this._id}}" class="py-1 pl-3 category-dropdown border"
+                                                    style="font-size:15px" data-filter=".{{this.Category}}">
+                                                    {{this.Category}}</li>
+                                                {{/each}}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="shop__product__option">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="shop__product__option__right">
+                                <p>Sort by Price:</p>
+                                <select id="sort-select">
+                                    <option disabled selected>Select Sort</option>
+                                    <option value="low-to-high">Low To High</option>
+                                    <option value="high-to-low">High to Low</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row product__filter " id="products-container">
+                    {{#each products}}
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-md-6 col-sm-6 mix {{this.categoryName}}">
+                        <div class="product__item">
+                            <div class="border border-1" style="position:relative">
+                                <div class="product__item__pic set-bg" data-setbg="/product-images/{{this._id}}.jpg"
+                                    style="background-size: contain">
+                                    {{#if this.catOfferPercentage}}
+                                    <span class="label text-bg-danger">{{this.catOfferPercentage}}% Off</span>
+                                    {{else if this.productOfferPercentage}}
+                                    <span class="label text-bg-danger">{{this.productOfferPercentage}}% Off</span>
+                                    {{else}}
+                                    <span class="label text-bg-danger">New</span>
+                                    {{/if}}
+                                    <ul class="product__hover" id="wishlist-section">
+                                        {{#if this.isInWishlist}}
+                                        <li style="z-index:2"><a onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="fa fa-heart fa-lg"
+                                                    style="cursor: pointer; color:red;"></i></a><span>Wishlist</span>
+                                        </li>
+
+                                        {{else}}
+                                        <li style="z-index:2"><a onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="fa fa-heart heart-icon fa-lg"
+                                                    style="cursor: pointer; color:grey;"></i></a><span>Wishlist</span>
+                                        </li>
+                                        {{/if}}
+                                    </ul>
+                                </div>
+                                {{!-- child div --}}
+                                <a href="/product?id={{this._id}}">
+                                    <div
+                                        style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; z-index: 1;background-color: rgba(255, 255, 255, 0);">
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="product__item__text">
+                                <h6>{{this.Name}}</h6>
+                                {{!-- <a href="/add-to-cart/{{this._id}}" class="add-cart">+ Add To Cart</a> --}}
+                                <a onclick="addToCart('{{this._id}}','{{this.Stock}}')" class="add-cart"
+                                    style="color: #e61d31e8; hover: ">+ Add
+                                    To Cart</a>
+                                <div class="rating">
+                                    <i class="fa fa-star" style="color: gold"></i>
+                                    <i class="fa fa-star" style="color: gold"></i>
+                                    <i class="fa fa-star" style="color: gold"></i>
+                                    <i class="fa fa-star" style="color: gold"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                {{#if this.actualPrice }}
+                                <div class="d-flex gap-2">
+                                    <h5>₹ {{this.Price}}</h5>
+                                    <strike style="font-size: 13px; color: gray;">₹ {{this.actualPrice}}</strike>
+                                </div>
+                                {{else}}
+                                <h5>₹ {{this.Price}}</h5>
+                                {{/if}}
+                                <div class="product__color__select">
+                                    <label for="pc-1">
+                                        <input type="radio" id="pc-1">
+                                    </label>
+                                    <label class="active black" for="pc-2">
+                                        <input type="radio" id="pc-2">
+                                    </label>
+                                    <label class="grey" for="pc-3">
+                                        <input type="radio" id="pc-3">
+                                    </label>
+                                </div>
+                            </div>
+                            {{#if fewStock}}
+                            <p class="text-danger text-center">Only Few Available!</p>
+                            {{/if}}
+                            {{#if noStock}}
+                            <p class="text-danger text-center">Out Of Stock!</p>
+                            {{/if}}
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+
+<!-- Search Begin -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch">+</div>
+        <form class="search-model-form">
+            <input type="text" id="search-input" placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search End -->
+
+<!-- Js Plugins -->
+<!-- Js Plugins -->
+<script src="./users/js/jquery-3.3.1.min.js"></script>
+<script src="./users/js/bootstrap.min.js"></script>
+<script src="./users/js/jquery.nice-select.min.js"></script>
+<script src="./users/js/jquery.nicescroll.min.js"></script>
+<script src="./users/js/jquery.magnific-popup.min.js"></script>
+<script src="./users/js/jquery.countdown.min.js"></script>
+<script src="./users/js/jquery.slicknav.js"></script>
+<script src="./users/js/mixitup.min.js"></script>
+<script src="./users/js/owl.carousel.min.js"></script>
+<script src="./users/js/main.js"></script>
+
+<script>
+    addToCart = (productId, productStock) => {
+        const stock = parseInt(productStock)
+        if (stock === 0) {
+            swal({
+                icon: "error",
+                title: "Oops..!",
+                text: "Out Of Stock!",
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        }
+        else {
+            $.ajax({
+                url: '/add-to-cart/' + productId,
+                method: 'get',
+                success: (response) => {
+                    if (response.maxLimit) {
+                        swal({
+                            title: "Max Limit Reached",
+                            icon: "warning",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    }
+                    else if (response.status) {
+                        let count = $('.cart-count').html()
+                        count = parseInt(count) + 1
+                        $('.cart-count').html(count)
+                        swal("Successfully added to Cart", {
+                            icon: "success",
+                        }).then(() => {
+                            // Store the current scroll position
+                            sessionStorage.setItem('scrollPosition', window.pageYOffset);
+                            location.reload()
+                            // Restore the scroll position after the page reloads
+                            window.scrollTo(0, sessionStorage.getItem('scrollPosition'));
+                        });
+
+                    }
+                    else {
+                        location.href = '/login'
+                    }
+                }
+            })
+        }
+    }
+</script>
+
+
+<script>
+    addToWishlist = (productId) => {
+
+        $.ajax({
+            url: '/add-to-wishlist/' + productId,
+            method: 'get',
+            success: (response) => {
+                if (response.add) {
+                    //heartIcon.classList.add('red');
+                    let count = $('.wishlist-count').html()
+                    count = parseInt(count) + 1
+                    $('.wishlist-count').html(count)
+                    swal("Successfully added to Wishlist", {
+                        icon: "success",
+                    }).then(() => {
+                        // Reloading the wishlist section of the page
+                        location.reload()
+                    });
+
+                }
+                else if (response.remove) {
+                    //heartIcon.classList.remove('red');
+                    let count = $('.wishlist-count').html()
+                    count = parseInt(count) - 1
+                    $('.wishlist-count').html(count)
+                    swal("The Product has been removed from the Wishlist")
+                        .then(() => {
+                            // Reloading the wishlist section of the page
+                            location.reload()
+                        });
+                }
+                else {
+                    location.href = '/login'
+                }
+            }
+        })
+
+    }
+</script>
+
+<script>
+    const categoryDropdowns = document.querySelectorAll('.category-dropdown');
+
+    categoryDropdowns.forEach((dropdown) => {
+        dropdown.addEventListener('click', () => {
+            // remove "clicked" class from all other dropdowns
+            categoryDropdowns.forEach((otherDropdown) => {
+                otherDropdown.classList.remove('clicked');
+            });
+
+            // add "clicked" class to this dropdown
+            dropdown.classList.add('clicked');
+        });
+    });
+
+</script>
+
+<script>
+    // Get references to the search input, search button, and search results div
+    const searchInput = document.getElementById('search-input')
+    const searchButton = document.getElementById('search-button')
+    const searchResults = document.getElementById('search-results')
+
+    // Add an event listener to the search input field
+    searchInput.addEventListener("input", () => {
+        const searchQuery = searchInput.value.trim()
+
+        // Hide the search results dropdown if the search query is empty
+        if (searchQuery === '') {
+            searchResults.innerHTML = ''
+            return
+        }
+        else {
+            // Make an Ajax request to the server to get the list of matching products or categories
+            $.ajax({
+                url: `/shop/search?query=${searchQuery}`,
+                method: "GET",
+                success: (response) => {
+                    const dropDownItems = response.searchResult.map(item =>
+                        `<div class="px-4 py-1 border border-top-0 border-white" style="font-size:14px; color:white; cursor:pointer;">${item.Name}</div>`)
+                    searchResults.innerHTML = dropDownItems.join('')
+                    searchResults.style.display = "block"
+                }
+            }).catch(error => console.error(error))
+        }
+    })
+    // Add an event listener to the search results dropdown
+    searchResults.addEventListener('click', event => {
+        // Check if the clicked element is a dropdown item
+        if (event.target.matches('#search-results div')) {
+            // Update the search input value with the clicked product name
+            const productName = event.target.textContent.trim()
+            searchInput.value = productName
+
+            // Hide the search results dropdown
+            searchResults.innerHTML = ""
+        }
+    })
+
+    // Add an event listener to the document object
+    document.addEventListener("click", (event) => {
+        // Check if the click event originated from the search input field or the search results dropdown list
+        if (!event.target.matches("#search-input") && !event.target.matches("#search-results div")) {
+            searchResults.style.display = "none" // hide the dropdown list
+        }
+    })
+
+    //////////////////////////////////////////search button  when clicked////////////////////////////////////////////
+
+    const productsContainer = document.querySelector('#products-container');
+
+    $("#search-form").submit((e) => {
+        e.preventDefault(); // prevent the default form submission behavior
+        const searchQuery = $("#search-input").val().trim(); // get the search query from the input field
+        if (searchQuery !== "") {
+            $.ajax({
+                url: `/shop/search?query=${searchQuery}`, // change the URL to match your server endpoint
+                method: "GET",
+                success: (response) => {
+                    console.log(response.searchResult);
+                    // handle the response from the server
+                    const products = response.searchResult;
+                    if (products.length > 0) {
+                        window.location.href = `/shop/search-results?query=${encodeURIComponent(searchQuery)}&results=${encodeURIComponent(JSON.stringify(products))}`;
+                    } else {
+                        productsContainer.innerHTML = "<h3>No products found</h3>";
+                    }
+
+                },
+                error: (err) => {
+                    // handle the error if the server returns one
+                    console.log(err);
+                },
+            });
+        } else {
+            swal({
+                title: "Search field is empty",
+                icon: "warning",
+                timer: 1250
+            })
+        }
+    });
+
+
+</script>

@@ -1,0 +1,176 @@
+<style>
+    .btn {
+        background-color: white;
+        border: 1px solid black;
+        font-weight: bold;
+    }
+
+    .shopping__cart__table table thead tr th {
+        padding-bottom: 12px;
+    }
+</style>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Your Orders</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Your Orders</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart ">
+    <div class="container py-5 mb-5 mt-3">
+        <div class="shopping__cart__table">
+            <table id="orderTable" class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th class="align-middle text-center">Date</th>
+                        <th class="align-middle text-center">Shipping Address</th>
+                        <th class="align-middle text-center">Status</th>
+                        <th class="align-middle text-center">View Product</th>
+                        <th class="align-middle text-center">Total Amount</th>
+                        <th class="align-middle text-center">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each orderHistory}}
+                    <tr>
+                        <td class="align-middle">
+                            {{this.date}}
+                        </td>
+                        <td class="align-middle" style="max-width:300px">
+                            {{this.deliveryDetails.addressLine_1}}<br>{{this.deliveryDetails.addressLine_2}}<br>
+                            {{this.deliveryDetails.city}}, {{this.deliveryDetails.state}}, Pin:
+                            {{this.deliveryDetails.postcode}}
+                        </td>
+                        <td class="align-middle">{{this.status}}</td>
+                        {{#if this.Cancelled}}
+                        <td class="align-middle"><a class="btn btn-success disabled align-middle"
+                                href="/view-order/{{this._id}}">View
+                                product</a>
+                        </td>
+                        {{else if this.Returned}}
+                        <td class="align-middle"><a class="btn btn-success disabled align-middle"
+                                href="/view-order/{{this._id}}">View
+                                product</a>
+                        </td>
+                        {{else}}
+                        {{!-- <td><a class="btn btn-success align-middle" href="/ordered-products?id={{this._id}}">View
+                                product</a>
+                        </td> --}}
+                        <td class="align-middle"><a href="/ordered-products?id={{this._id}}"><button type="button"
+                                    class="btn btn-outline-success">View Product</button></a></td>
+                        {{/if}}
+                        {{!-- <td class="align-middle"><a href="/ordered-products?id={{this._id}}"><button type="button"
+                                    class="btn btn-outline-success">View Product</button></a></td> --}}
+                        <td class="align-middle">
+                            ₹ {{this.totalAmount}} <br>Mode:<strong> {{this.paymentMethod}}</strong></td>
+                        {{!-- <td class="align-middle"><button type="button" class="btn btn-outline-danger">Cancel
+                                Order</button></td> --}}
+                        {{#if this.Cancelled}}
+                        <td class="align-middle" style="color: red; font-weight:bold;">{{this.status}}</td>
+                        {{else if this.Delivered}}
+                        <td class="align-middle">
+                            <p style="color: rgb(9, 194, 15);font-weight:bold; margin: 0 0 5px 0">{{this.status}}</p>
+                            <a class="btn btn-warning" href="/order-return/{{this._id}}"
+                                onclick="return confirmReturnSwal(event, '{{this._id}}')">Return
+                                Order</a>
+                        </td>
+                        {{!-- <td><a class="btn btn-warning" href="/order-return/{{this._id}}">Return order</a></td>
+                        --}}
+                        {{else if this.Returned}}
+                        <td class="align-middle" style="color: rgb(117, 128, 0);font-weight:bold;">{{this.status}}</td>
+
+                        {{else}}
+                        {{!-- <td><a class="btn btn-danger" href="/cancel-Order/{{this._id}}"
+                                onclick="return confirm('Are you sure  {{this.Name}} ?')">Cancel order</a></td> --}}
+                        <td class="align-middle"><a class="btn btn-outline-danger" href="/order-cancel/{{this._id}}"
+                                onclick="return confirmCancelSwal(event, '{{this._id}}')">Cancel
+                                Order</a></td>
+                        {{/if}}
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="float-right">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="continue__btn">
+                    <a href="/">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
+
+<!-- Js Plugins -->
+<script src="./users/js/jquery-3.3.1.min.js"></script>
+<script src="./users/js/bootstrap.min.js"></script>
+<script src="./users/js/jquery.nice-select.min.js"></script>
+<script src="./users/js/jquery.nicescroll.min.js"></script>
+<script src="./users/js/jquery.magnific-popup.min.js"></script>
+<script src="./users/js/jquery.countdown.min.js"></script>
+<script src="./users/js/jquery.slicknav.js"></script>
+<script src="./users/js/mixitup.min.js"></script>
+<script src="./users/js/owl.carousel.min.js"></script>
+<script src="./users/js/main.js"></script>
+
+<script>
+    function confirmCancelSwal(event, orderId) {
+        event.preventDefault();
+
+        swal({
+            title: "Are you sure?",
+            text: "Do you want to cancel this order?",
+            icon: "warning",
+            buttons: {
+                cancel: "Cancel",
+                confirm: "Yes"
+            },
+            dangerMode: true,
+        })
+            .then((willReturn) => {
+                if (willReturn) {
+                    window.location.href = "/order-cancel/" + orderId;
+                }
+            });
+    }
+
+    function confirmReturnSwal(event, orderId) {
+        event.preventDefault();
+
+        swal({
+            title: "Are you sure?",
+            text: "Do you want to return this order?",
+            icon: "warning",
+            buttons: {
+                cancel: "Cancel",
+                confirm: "Yes"
+            },
+            dangerMode: true,
+        })
+            .then((willReturn) => {
+                if (willReturn) {
+                    window.location.href = "/order-return/" + orderId;
+                }
+            });
+    }
+
+
+$(document).ready( function () {
+    $('#orderTable').DataTable();
+} );
+</script>

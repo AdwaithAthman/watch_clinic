@@ -1,0 +1,87 @@
+<style>
+    .shopping__cart__table table thead tr th {
+        padding-bottom: 12px;
+    }
+    
+</style>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Ordered Products</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Ordered Products</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="shopping__cart__table">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each getOrderedProducts}}
+                    <tr>
+                        <td class="product__cart__item pr-4 align middle">
+                            <a href="/product?id={{this.Product._id}}">
+                            <div class="product__cart__item__pic" style="margin-right: -60px">
+                                <img src="/product-images/{{this.Product._id}}.jpg" alt=""
+                                    style="height: 90px; width: 90px">
+                            </div>
+                            </a>
+                            <a href="/product?id={{this.Product._id}}">
+                            <div class="product__cart__item__text">
+                                <h6>{{this.Product.Name}}</h6>
+                                <h5 id="priceOf{{this.Product._id}}">₹ {{this.Product.Price}}</h5>
+                            </div>
+                            </a>
+                        </td>
+                        <td class="quantity__item align-middle">
+                            <center class="quantity">
+                                <div class="pro-qty-2 d-flex justify-content-center align-items-center">
+                                    <span id="qtyId{{this.Product._id}}" class="p-3">{{this.Quantity}}</span>
+                                </div>
+                            </center>
+                        </td>
+                        <td class="cart__price align-middle">₹ {{multiply this.Quantity this.Product.Price}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
+
+<!-- Js Plugins -->
+<script src="./users/js/jquery-3.3.1.min.js"></script>
+<script src="./users/js/bootstrap.min.js"></script>
+<script src="./users/js/jquery.nice-select.min.js"></script>
+<script src="./users/js/jquery.nicescroll.min.js"></script>
+<script src="./users/js/jquery.magnific-popup.min.js"></script>
+<script src="./users/js/jquery.countdown.min.js"></script>
+<script src="./users/js/jquery.slicknav.js"></script>
+<script src="./users/js/mixitup.min.js"></script>
+<script src="./users/js/owl.carousel.min.js"></script>
+<script src="./users/js/main.js"></script>
+
+<script>
+
+</script>

@@ -1,0 +1,117 @@
+<div class="flex items-start p-6 bg-gray-50 my-5">
+    <div class="flex-1 max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl ">
+        <div class="flex flex-col md:flex-row justify-content-between">
+            <div class="h-32 md:h-auto md:w-1/2">
+                <img aria-hidden="true" class=" w-full h-full " src="/users/img/category-add-offer.svg" style="height: 400px;"
+                    alt="Office" />
+            </div>
+            <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+                <form action="/admin/product-add-offer" method="post" enctype="multipart/form-data" style="width:100%">
+                    <div class="w-full">
+                        {{!-- {{#if categoryErr}}
+                        <div class="alert alert-danger text-center">
+                            <strong>Category already exists!</strong>
+                        </div>
+                        {{/if}} --}}
+                        <h1 class="mb-4 text-xl font-semibold text-gray-700">
+                            Add Product Offer
+                        </h1>
+                        {{!-- <label class="block text-sm pb-3" >
+                            <span class="text-gray-700">Choose the Category</span>
+                            <input
+                                class="block w-full mt-1 text-sm  focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="Coupon code" name="coupon" required/>
+                        </label> --}}
+                         <label for="product" class="block text-sm pb-3">Product
+                                <select name="product" class="form-control mt-1 text-sm" required>
+                                    <option value="" disabled selected>Choose the Product</option>
+                                    {{#each products}}
+                                    <option>{{this.Name}}</option>
+                                    {{/each}}
+                                </select>
+                                </label>
+                        <label class="block text-sm pb-1" for="productOfferPercentage">
+                            <span class="text-gray-700">Enter Offer(%)</span>
+                            <input
+                                class="block w-full mt-1 text-sm  focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="Offer(%)" name="productOfferPercentage" type="number" id="offer" onkeyup="validatePercentage()" required/>
+                        </label>
+                        <div id="percentageError" class="pb-3"></div>
+
+                        <div class="d-flex align-items-center gap-4 pb-3">
+                            <label class="text-gray-700 dark:text-gray-400" for="starting">Validity Start Date:</label>
+                            <input
+                                class="form-controlblock mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                type="date" name="starting" id="startDate" style="cursor: pointer" required />
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <label class="text-gray-700 dark:text-gray-400" for="expiry">Validity Expiry Date:</label>
+                            <input
+                                class="form-controlblock mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                type="date" name="expiry" id="endDate()" style="cursor: pointer" required />
+                        </div>
+                        <!-- You should use a button here, as the anchor is only used for the example  -->
+                        <button
+                            class=" mt-4 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                            type="submit">
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- date validation --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        let today = new Date()
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        today = yyyy + '-' + mm + '-' + dd;
+
+        $('#startDate').attr('min', today)
+        $('#startDate').change(function () {
+            let date = document.getElementById('startDate').value
+            $('#endDate').attr('min', date)
+        })
+    })
+</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    var percentageError = document.getElementById('percentageError')
+
+
+    function validatePercentage() {
+        var percentage = document.getElementById('offer').value.trim();
+
+        if (percentage > 95 || percentage.length == 0) {
+            percentageError.innerHTML = "Value must be less than 95"
+            percentageError.style.color = "red";
+            return false;
+        }
+        percentageError.innerHTML = 'valid';
+        percentageError.style.color = 'green'
+        return true;
+    }
+    $(document).on("submit", "form", function (e) {
+        if (validatePercentage()) {
+        } else {
+            e.preventDefault();
+            return false;
+        }
+    })
+</script>

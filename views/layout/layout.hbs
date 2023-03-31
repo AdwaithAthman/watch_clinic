@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="zxx">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Male_Fashion Template">
+  <meta name="keywords" content="Male_Fashion, unica, creative, html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Watch Clinic</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+  {{!-- cart-count --}}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jqrery.min.js"></script>
+  
+  {{#if user_files}}
+  <!-- Css Styles of user -->
+  <link rel="stylesheet" href="./users/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="./users/css/elegant-icons.css" type="text/css">
+  <link rel="stylesheet" href="./users/css/magnific-popup.css" type="text/css">
+  <link rel="stylesheet" href="./users/css/nice-select.css" type="text/css">
+  <link rel="stylesheet" href="./users/css/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="./users/css/slicknav.min.css" type="text/css">
+  <link rel="stylesheet" href="./users/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="./users/css/style.css" type="text/css">
+
+  {{else if admin_files}}
+  <!-- Css Styles of admin -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/admin/css/tailwind.output.css" />
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  <script src="/admin/js/init-alpine.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
+  <script src="/admin/js/charts-lines.js" defer></script>
+  <script src="/admin/js/charts-pie.js" defer></script>
+  {{/if}}
+
+</head>
+
+<body>
+  {{#if admin}}
+  {{> admin-header}}
+  {{else if user}}
+  {{> user-header}}
+  {{/if}}
+
+
+  {{{body}}}
+
+  {{#if user}}
+  {{> user-footer}}
+  {{/if}}
+  <!-- Js Plugins -->
+ 
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script> 
+  
+  
+{{!--   
+  <script src="./users/js/bootstrap.min.js"></script>
+  <script src="./users/js/jquery.nice-select.min.js"></script>
+  <script src="./users/js/jquery.nicescroll.min.js"></script>
+  <script src="./users/js/jquery.magnific-popup.min.js"></script>
+  <script src="./users/js/jquery.countdown.min.js"></script>
+  <script src="./users/js/jquery-3.3.1.min.js"></script>
+  <script src="./users/js/jquery.slicknav.js"></script> --}}
+
+  <script src="./users/js/mixitup.min.js"></script>
+  <script src="./users/js/owl.carousel.min.js"></script>
+  <script src="./users/js/main.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+  
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+
+{{!-- <script src="/users/js/script.js"></script> --}}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{{!-- <script>
+  window.addEventListener("popstate", function() {
+  location.reload();
+});
+</script> --}}
+
+</body>
+
+</html>

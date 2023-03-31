@@ -1,0 +1,108 @@
+<style>
+    .login-btn {
+        background: radial-gradient(circle, #e53637, #000000);
+        background-size: 200% 200%;
+        transition: background-position 0.5s;
+    }
+
+    .login-btn:hover {
+        background-position: right bottom;
+    }
+
+    .login-btn:active {
+        background-color: #b83e3e;
+    }
+
+    .otp-btn {
+        background: radial-gradient(circle, #e53637, #000000);
+        background-size: 200% 200%;
+        transition: background-position 0.5s;
+    }
+
+    .otp-btn:hover {
+        background-position: right bottom;
+    }
+
+    .otp-btn:active {
+        background-color: #b83e3e;
+    }
+</style>
+
+<div class="flex items-center min-h-screen p-6 bg-gray-50 ">
+    <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
+        <div class="flex flex-col overflow-y-auto md:flex-row">
+            <div class="h-32 md:h-auto md:w-1/2">
+                <img aria-hidden="true" class="object-cover w-full h-full" src="/admin/img/login-page-1.jpg"
+                    alt="Office" />
+                <img aria-hidden="true" class="hidden object-cover w-full h-full " src="/admin/img/login-page-1.jpg"
+                    alt="Office" />
+            </div>
+            <div class=" items-center justify-center p-6 sm:p-12 md:w-1/2">
+                <form action="/login" method="post" style="width:100%">
+                    <div class="w-full">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px">
+                            <h1 class=" text-xl font-semibold text-gray-700 text-center">
+                                Login to
+                            </h1>
+                            <img src="/users/img/logo.png" class="mb-2" lt="" style="height: 45px;">
+                        </div>
+                        <br>
+                        {{#if loginErr}}
+                        <div class="alert alert-danger text-center">
+                            <strong>{{loginErr}}</strong>
+                        </div>
+                        {{/if}}
+                        <label class="block text-sm" for="email">
+                            <span class="text-gray-700">Email</span>
+                            <input
+                                class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="Enter the Email" type="email" id="email" name="Email"
+                                onkeyup="validateEmail()" required />
+                            <span id="email-error"></span>
+                        </label>
+                        <label class="block mt-4 text-sm">
+                            <span class="text-gray-700">Password</span>
+                            <input
+                                class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="***************" type="password" id="password" name="Password" required />
+                        </label>
+
+                        <!-- You should use a button here, as the anchor is only used for the example  -->
+                        <button type="submit"
+                            class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white border border-transparent rounded-lg focus:outline-none focus:shadow-outline-purple login-btn">
+                            Log in
+                        </button>
+                        <p class="mt-1 text-center">
+                            <a class="text-sm font-medium hover:underline" href="/signup" style="color:#e53637">
+                                Create an account
+                            </a>
+                        </p>
+                        <br>
+                    </div>
+                </form>
+                <br>
+
+                {{!-- otp --}}
+                <form action="/get-otp" method="post" enctype="multipart/form-data" style="width:100%">
+                    <div class="w-full">
+                        <label class="block text-sm" for="email">
+                            <span class="text-gray-700 dark:text-gray-400">OTP Validation</span>
+                            <input
+                                class="block w-full mt-1 text-sm focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="Enter the Mobile Number" type="number" id="otp" name="Phone" onkeyup="" />
+                            <span id="email-error"></span>
+                        </label>
+                        <!-- You should use a button here, as the anchor is only used for the example  -->
+                        <button type="submit"
+                            class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white border border-transparent rounded-lg focus:outline-none focus:shadow-outline-purple otp-btn">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./validate.js"></script>

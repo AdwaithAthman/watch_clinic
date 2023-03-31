@@ -1,0 +1,131 @@
+<style>
+    #productOfferTable_length {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+        position: sticky;
+        z-index: 10;
+        left: 0;
+        background-color: #f9fafb;
+    }
+
+    #productOfferTable_length select{
+        background-color: white;
+    }
+
+    #productOfferTable_filter {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+    }
+
+    #productOfferTable_filter input{
+        background-color: white;
+    }
+
+    #productOfferTable_info {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+        position: sticky;
+        z-index: 10;
+        left: 0;
+        background-color: #f9fafb;
+    }
+
+    #productOfferTable_paginate {
+        font-size: 14px;
+        padding: 7.5px 15px 0px 15px;
+    }
+
+    table {
+        border-width: 1px
+    }
+
+    tbody,
+    td,
+    tfoot,
+    th,
+    thead,
+    tr {
+        border-color: inherit;
+        border-style: solid;
+        border-width: 0.5px;
+        column
+    }
+
+</style>
+
+{{!-- -------------------product offer----------------------- --}}
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container grid px-6 mx-auto">
+        <div class="d-flex align-items-center justify-content-between">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Product Offer List
+        </h2>
+             <div>
+                <a href="/admin/product-add-offer"><button
+                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                >
+                  Add Offer
+                </button></a>
+              </div>
+              </div>
+
+        <!-- With avatar -->
+        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table id="productOfferTable" class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3">Product</th>
+                            <th class="px-4 py-3">Offer(%)</th>
+                            <th class="px-4 py-3">Starting Date</th>
+                            <th class="px-4 py-3">Expiry Date</th>
+                            <th class="px-4 py-3">Edit</th>
+                            <th class="px-4 py-3">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        {{#each allOfferProducts}}
+                        <tr class="text-gray-700 dark:text-gray-400">
+                            <td class="px-4 py-3 text-sm">
+                                <b>{{this.product}}</b>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                               {{this.productOfferPercentage}}%
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                               {{this.starting}}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                               {{this.expiry}}
+                            </td>
+                            <td class="px-4 py-3 text-xs">
+                                <a href="/admin/product-edit-offer/{{this._id}}" role="button">
+                                <span
+                                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-700">
+                                    Edit
+                                </span>
+                                </a>
+                            </td>
+                            <td class="px-4 py-3 text-xs">
+                                <a href="/admin/delete-product-offer/{{this._id}}" role="button">
+                                <span
+                                    class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700 " onclick="return confirm('Are you sure you want to delete Product Offer for {{this.product}} ?')">
+                                    Delete
+                                </span>
+                                </a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    $(document).ready(function () {
+        $('#productOfferTable').DataTable();
+    });
+</script>

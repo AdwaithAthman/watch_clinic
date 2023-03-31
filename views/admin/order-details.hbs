@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="card mt-5">
+        <div class="card-header d-flex justify-content-between">
+            <div class="px-3"> <strong>Date of Purchase: </strong> {{viewDetails.date}}</div>
+            <div class="px-3"> <strong>Status:</strong> {{viewDetails.status}}</div>
+
+        </div>
+        <div class="card-body">
+            <div class="row mb-4 px-3">
+                <div class="col-sm-6">
+                    <h6 class="mb-3"><strong>Delivery Address:</strong></h6>
+                    <div>
+                        <div>{{viewDetails.deliveryDetails.firstName}} {{viewDetails.deliveryDetails.lastName}}</div>
+                    </div>
+                    <div>{{viewDetails.deliveryDetails.addressLine_1}},</div>
+                    <div>{{viewDetails.deliveryDetails.addressLine_2}},</div>
+                    <div>City: {{viewDetails.deliveryDetails.city}}, State: {{viewDetails.deliveryDetails.state}}</div>
+                    <div>Postcode: {{viewDetails.deliveryDetails.postcode}}</div>
+                    <div>Phone: {{viewDetails.deliveryDetails.phone}}</div>
+                    <div>Email: {{viewDetails.deliveryDetails.email}}</div>
+                </div>
+
+
+
+            </div>
+
+            <div class="d-flex gap-2" style="overflow-x: hidden">
+            <div class="table-responsive-sm col-lg-8 col-sm-5 px-3">
+                <table class="table table-striped border">
+                    <thead>
+                        <tr>
+                            <th class="center">#</th>
+                            <th>Item</th>
+                            <th class="right">MRP</th>
+                            <th class="right">SP</th>
+                            <th class="center">Qty</th>
+                            <th class="right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each viewDetails.products}}
+                        <tr>
+                            <td class="center">{{inc @index}}</td>
+                            <td class="left strong">{{this.productData.Name}}</td>
+                            {{#if this.productData.actualPrice}}
+                            <td class="right">₹{{this.productData.actualPrice}}</td>
+                            {{else}}
+                            <td class="right">₹{{this.productData.Price}}</td>
+                            {{/if}}
+                            <td class="right">₹{{this.productData.Price}}</td>
+                            <td class="center">{{this.Quantity}}</td>
+                            <td class="right">₹{{multiply this.productData.Price this.Quantity}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+                <div class="col-lg-4 col-sm-5 ml-auto px-3">
+                    <table class="table table-clear border">
+                        <tbody>
+                            <tr>
+                                <td class="left">
+                                    <strong>Sub Total</strong>
+                                </td>
+                                <td class="right">
+                                    <strong>₹{{viewDetails.totalAmount}}</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="left">
+                                    <strong>Payment Method</strong>
+                                </td>
+                                <td class="right">{{viewDetails.paymentMethod}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            
+            </div>
+
+        </div>
+    </div>
+</div>

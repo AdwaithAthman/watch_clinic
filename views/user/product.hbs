@@ -1,0 +1,746 @@
+<style>
+    .fa.fa-play {
+        visibility: hidden;
+    }
+
+    a.add-cart {
+        cursor: pointer;
+    }
+
+    a.cart-main-btn {
+        color: white !important;
+    }
+
+    .product-img {
+        position: relative;
+    }
+
+    .product-img1 {
+        position: relative;
+    }
+
+    .product-img2 {
+        position: relative;
+    }
+
+    .product-img3 {
+        position: relative;
+    }
+
+    .magnifier-lens {
+        position: absolute;
+        width: 150px;
+        height: 100px;
+        background-color: #ff980030;
+        border: 1px solid #ff9800;
+        opacity: 0;
+    }
+
+    .magnifier-lens1 {
+        position: absolute;
+        width: 150px;
+        height: 100px;
+        background-color: #ff980030;
+        border: 1px solid #ff9800;
+        opacity: 0;
+    }
+
+    .magnifier-lens2 {
+        position: absolute;
+        width: 150px;
+        height: 100px;
+        background-color: #ff980030;
+        border: 1px solid #ff9800;
+        opacity: 0;
+    }
+
+    .magnifier-lens3 {
+        position: absolute;
+        width: 150px;
+        height: 100px;
+        background-color: #ff980030;
+        border: 1px solid #ff9800;
+        opacity: 0;
+    }
+
+    .magnifier-lens.active {
+        opacity: 1;
+    }
+
+    .magnifier-lens1.active {
+        opacity: 1;
+    }
+
+    .magnifier-lens2.active {
+        opacity: 1;
+    }
+
+    .magnifier-lens3.active {
+        opacity: 1;
+    }
+
+    .product-details {
+        position: relative;
+    }
+
+    .magnified-img {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border: 2px solid #ff9800;
+        background-color: #ff980030;
+        transform: scale(0.5);
+        opacity: 0;
+        transition: opacity .5s, transform .5s;
+    }
+
+    .magnified-img.active {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .heart-icon {
+        color: gray;
+    }
+
+    .heart-icon.red {
+        color: red;
+    }
+</style>
+
+<!-- Shop Details Section Begin -->
+<section class="shop-details">
+    <div class="product__details__pic">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 pb-3">
+                    <div class="product__details__breadcrumb">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Product Details</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col-lg-3 col-md-3" style="flex: 0 0 0">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+                                <div class="product__thumb__pic set-bg"
+                                    data-setbg="/product-images/{{productDetails._id}}.jpg"
+                                    style="background-position: center;">
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
+                                <div class="product__thumb__pic set-bg"
+                                    data-setbg="/product-images/{{productDetails._id}}2.jpg"
+                                    style="background-position: center;">
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
+                                <div class="product__thumb__pic set-bg"
+                                    data-setbg="/product-images/{{productDetails._id}}3.jpg"
+                                    style="background-position: center;">
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
+                                <div class="product__thumb__pic set-bg"
+                                    data-setbg="/product-images/{{productDetails._id}}4.jpg"
+                                    style="background-position: center;">
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-9">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__pic__item product-img">
+                                <img class="zoom" src="/product-images/{{productDetails._id}}.jpg" alt=""
+                                    style="width:360px; height:420px; object-fit:cover">
+                                <div class="magnifier-lens"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="product__details__pic__item product-img1">
+                                <img class="zoom" src="/product-images/{{productDetails._id}}2.jpg" alt=""
+                                    style="width:360px; height:420px; object-fit:cover">
+                                <div class="magnifier-lens1"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <div class="product__details__pic__item product-img2">
+                                <img class="zoom" src="/product-images/{{productDetails._id}}3.jpg" alt=""
+                                    style="width:360px; height:420px; object-fit:cover">
+                                <div class="magnifier-lens2"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-4" role="tabpanel">
+                            <div class="product__details__pic__item product-img3">
+                                <img class="zoom" src="/product-images/{{productDetails._id}}4.jpg" alt=""
+                                    style="width:360px; height:420px; object-fit:cover">
+                                <div class="magnifier-lens3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-12">
+                    <div class="product__details__text text-start product-details">
+                        <h4>{{productDetails.Name}}</h4>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                            <span> - 5 Reviews</span>
+                        </div>
+                        {{#if productDetails.actualPrice }}
+                        <div class="d-flex gap-2">
+                            <h3 style="margin-bottom: 10px">₹ {{productDetails.Price}}
+                                <span><strike>₹ {{productDetails.actualPrice}}</strike></span>
+                            </h3>
+                        </div>
+                        {{else}}
+                        <h3>₹ {{productDetails.Price}}</h3>
+                        {{/if}}
+                        {{#if productDetails.catOfferPercentage}}
+                        <h4 style="color:red; margin-bottom: 1.8rem">{{productDetails.catOfferPercentage}}% Off</h4>
+                        {{else if productDetails.productOfferPercentage}}
+                        <h4 style="color:red; margin-bottom: 1.8rem">{{productDetails.productOfferPercentage}}% Off</h4>
+                        {{/if}}
+                        <p>{{productDetails.Description}}</p>
+                        {{#if productDetails.fewStock}}
+                        <div class="py-2">
+                            <p class="text-danger">Only Few Available!</p>
+                        </div>
+                        {{/if}}
+                        {{#if productDetails.noStock}}
+                        <div class="py-2">
+                            <p class="text-danger">Out Of Stock!</p>
+                        </div>
+                        {{/if}}
+
+                        <div class="d-flex align-items-center gap-4">
+                            <div class="product__details__cart__option mb-0">
+                                <a onclick="addToCart('{{productDetails._id}}')"
+                                    class="add-cart cart-main-btn primary-btn">add to cart</a>
+                            </div>
+                            {{!-- <div class="product__details__btns__option">
+                                <a onclick="addToWishlist('{{productDetails._id}}')" style="cursor: pointer;"><i
+                                        class="fa fa-heart"></i> add to wishlist</a>
+                            </div> --}}
+                            <ul class="list-unstyled" id="wishlist-section">
+                                {{#if productDetails.isInWishlist}}
+                                <li style="z-index:2"><a onclick="addToWishlist('{{productDetails._id}}')"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Add to Wishlist"><i
+                                            class="fa fa-heart fa-2x" style="cursor: pointer; color:red;"></i></a></li>
+
+                                {{else}}
+                                <li style="z-index:2"><a onclick="addToWishlist('{{productDetails._id}}')"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Add to Wishlist"><i
+                                            class="fa fa-heart heart-icon fa-2x"
+                                            style="cursor: pointer; color:grey;"></i></a></li>
+                                {{/if}}
+                            </ul>
+                        </div>
+                        {{!-- <div class="product__details__last__option">
+                            <h5><span>Guaranteed Safe Checkout</span></h5>
+                            <img src="/users/img/shop-details/details-payment.png" alt="">
+                            <ul>
+                                <li><span>SKU:</span> 3812912</li>
+                                <li><span>Categories:</span> Clothes</li>
+                                <li><span>Tag:</span> Clothes, Skin, Body</li>
+                            </ul>
+                        </div> --}}
+                        <div class="magnified-img"></div>
+                    </div>
+                </div>
+
+            </div>
+            {{!-- //////////////////////////////////////////////// --}}
+        </div>
+    </div>
+</section>
+<!-- Shop Details Section End -->
+
+<!-- Related Section Begin -->
+<section class="related">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="related-title">Related Products</h4>
+            </div>
+        </div>
+        <div class="row">
+            {{#each relatedProducts}}
+            <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix {{this.categoryName}}">
+                <div class="product__item">
+                    <div class="border border-1" style="position:relative">
+                        <div class="product__item__pic set-bg" data-setbg="/product-images/{{this._id}}.jpg"
+                            style="background-size: contain">
+                            {{#if this.catOfferPercentage}}
+                            <span class="label text-bg-danger">{{this.catOfferPercentage}}% Off</span>
+                            {{else if this.productOfferPercentage}}
+                            <span class="label text-bg-danger">{{this.productOfferPercentage}}% Off</span>
+                            {{else}}
+                            <span class="label text-bg-danger">New</span>
+                            {{/if}}
+                            <ul class="product__hover" id="wishlist-section">
+                                {{#if this.isInWishlist}}
+                                <li style="z-index:2"><a onclick="addToWishlist('{{this._id}}')"><i
+                                            class="fa fa-heart fa-lg"
+                                            style="cursor: pointer; color:red;"></i></a><span>Wishlist</span></li>
+
+                                {{else}}
+                                <li style="z-index:2"><a onclick="addToWishlist('{{this._id}}')"><i
+                                            class="fa fa-heart heart-icon fa-lg"
+                                            style="cursor: pointer; color:grey;"></i></a><span>Wishlist</span></li>
+                                {{/if}}
+                            </ul>
+                        </div>
+                        {{!-- child div --}}
+                        <a href="/product?id={{this._id}}">
+                            <div
+                                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; z-index: 1;background-color: rgba(255, 255, 255, 0);">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="product__item__text">
+                        <h6>{{this.Name}}</h6>
+                        {{!-- <a href="/add-to-cart/{{this._id}}" class="add-cart">+ Add To Cart</a> --}}
+                        <a onclick="addToCart('{{this._id}}','{{this.Stock}}')" class="add-cart"
+                            style="color: #e61d31e8; hover: ">+ Add
+                            To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        {{#if this.actualPrice }}
+                        <div class="d-flex gap-2">
+                            <h5>₹ {{this.Price}}</h5>
+                            <strike style="font-size: 13px; color: gray;">₹ {{this.actualPrice}}</strike>
+                        </div>
+                        {{else}}
+                        <h5>₹ {{this.Price}}</h5>
+                        {{/if}}
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                    {{#if fewStock}}
+                    <p class="text-danger text-center">Only Few Available!</p>
+                    {{/if}}
+                    {{#if noStock}}
+                    <p class="text-danger text-center">Out Of Stock!</p>
+                    {{/if}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+<!-- Related Section End -->
+
+<!-- zoom -->
+{{!--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<div class="zoom-box"></div>
+<script src="/zoomsl.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.zoom').imagezoomsl({
+            zoomrange: [3, 3]
+        });
+    })
+</script> --}}
+
+<!-- Js Plugins -->
+<script src="./users/js/jquery-3.3.1.min.js"></script>
+<script src="./users/js/bootstrap.min.js"></script>
+<script src="./users/js/jquery.nice-select.min.js"></script>
+<script src="./users/js/jquery.nicescroll.min.js"></script>
+<script src="./users/js/jquery.magnific-popup.min.js"></script>
+<script src="./users/js/jquery.countdown.min.js"></script>
+<script src="./users/js/jquery.slicknav.js"></script>
+<script src="./users/js/mixitup.min.js"></script>
+<script src="./users/js/owl.carousel.min.js"></script>
+<script src="./users/js/main.js"></script>
+
+<script>
+    addToCart = (productId) => {
+        $.ajax({
+            url: '/add-to-cart/' + productId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    let count = $('.cart-count').html()
+                    count = parseInt(count) + 1
+                    swal("Successfully added to Cart", {
+                        icon: "success",
+                    });
+                    $('.cart-count').html(count)
+                }
+                else if (response.status == "noStock") {
+                    swal({
+                        icon: "error",
+                        title: "Oops..!",
+                        text: "Out Of Stock!",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                }
+                else if (response.status == "fewStock") {
+                    swal({
+                        icon: "error",
+                        title: "Oops..!",
+                        text: "Out Of Stock!",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                }
+                else if (response.status == "maxLimitStock") {
+                    swal({
+                        icon: "warning",
+                        title: "Oops..!",
+                        text: "Limit Is Reached!",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                }
+                else {
+                    location.href = '/login'
+                }
+            }
+        })
+    }
+</script>
+
+{{!--
+<script>
+    addToWishlist = (productId) => {
+        $.ajax({
+            url: '/add-to-wishlist/' + productId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    let count = $('.wishlist-count').html()
+                    count = parseInt(count) + 1
+                    swal("Successfully added to Wishlist", {
+                        icon: "success",
+                    });
+                    $('.wishlist-count').html(count)
+                }
+                else {
+                    location.href = '/login'
+                }
+            }
+        })
+    }
+</script> --}}
+<script>
+    addToWishlist = (productId) => {
+
+        $.ajax({
+            url: '/add-to-wishlist/' + productId,
+            method: 'get',
+            success: (response) => {
+                if (response.add) {
+                    //heartIcon.classList.add('red');
+                    let count = $('.wishlist-count').html()
+                    count = parseInt(count) + 1
+                    $('.wishlist-count').html(count)
+                    swal("Successfully added to Wishlist", {
+                        icon: "success",
+                    }).then(() => {
+                        // Reloading the wishlist section of the page
+                        location.reload()
+                    });
+
+                }
+                else if (response.remove) {
+                    //heartIcon.classList.remove('red');
+                    let count = $('.wishlist-count').html()
+                    count = parseInt(count) - 1
+                    $('.wishlist-count').html(count)
+                    swal("The Product has been removed from the Wishlist")
+                        .then(() => {
+                            // Reloading the wishlist section of the page
+                            location.reload()
+                        });
+                }
+                else {
+                    location.href = '/login'
+                }
+            }
+        })
+
+    }
+</script>
+
+<script>
+    const lens = document.querySelector('.magnifier-lens');
+    const lens1 = document.querySelector('.magnifier-lens1');
+    const lens2 = document.querySelector('.magnifier-lens2');
+    const lens3 = document.querySelector('.magnifier-lens3');
+    const product_img = document.querySelector('.product-img img');
+    const product_img1 = document.querySelector('.product-img1 img');
+    const product_img2 = document.querySelector('.product-img2 img');
+    const product_img3 = document.querySelector('.product-img3 img');
+    const magnified_img = document.querySelector('.magnified-img');
+
+    magnify = (product_img, magnified_img) => {
+        lens.addEventListener('mouseover', moveLens)
+        product_img.addEventListener('mouseover', moveLens)
+
+        //take mouse out of Image
+        lens.addEventListener('mouseout', leaveLens)
+    }
+    magnify1 = (product_img1, magnified_img) => {
+        lens1.addEventListener('mouseover', moveLens1)
+        product_img1.addEventListener('mouseover', moveLens1)
+
+        //take mouse out of Image
+        lens1.addEventListener('mouseout', leaveLens1)
+    }
+    magnify2 = (product_img2, magnified_img) => {
+        lens2.addEventListener('mouseover', moveLens2)
+        product_img2.addEventListener('mouseover', moveLens2)
+
+        //take mouse out of Image
+        lens2.addEventListener('mouseout', leaveLens2)
+    }
+    magnify3 = (product_img3, magnified_img) => {
+        lens3.addEventListener('mouseover', moveLens3)
+        product_img3.addEventListener('mouseover', moveLens3)
+
+        //take mouse out of Image
+        lens3.addEventListener('mouseout', leaveLens3)
+    }
+
+    moveLens = (e) => {
+        console.log("X : " + e.pageX + " Y : " + e.pageY);
+        let x, y, cx, cy;
+        //get the position of the cursor
+        const product_img_rect = product_img.getBoundingClientRect();
+        x = e.pageX - product_img_rect.left - lens.offsetWidth / 2;
+        y = e.pageY - product_img_rect.top - lens.offsetHeight / 2;
+
+        //prevent the lens from being positioned outside the image
+        let max_xpos = product_img_rect.width - lens.offsetWidth;
+        let max_ypos = product_img_rect.height - lens.offsetHeight;
+
+        if (x > max_xpos) {
+            x = max_xpos;
+        }
+        if (x < 0) {
+            x = 0;
+        }
+
+        if (y > max_ypos) {
+            y = max_ypos;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+
+        lens.style.cssText = `top:${y}px; left:${x}px;`;
+
+        //calculate the magnified_img & lens's aspect ratio
+        cx = magnified_img.offsetWidth / lens.offsetWidth;
+        cy = magnified_img.offsetHeight / lens.offsetHeight;
+
+        //set the background position of magnified_img
+        magnified_img.style.cssText = `
+        background: url('${product_img.src}') 
+        -${x * cx}px -${y * cy}px /
+        ${product_img_rect.width * cx}px ${product_img_rect.height * cy}px 
+        no-repeat;
+        `;
+
+        lens.classList.add('active');
+        magnified_img.classList.add('active');
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+    moveLens1 = (e) => {
+        console.log("X : " + e.pageX + " Y : " + e.pageY);
+        let x, y, cx, cy;
+        //get the position of the cursor
+        const product_img_rect1 = product_img1.getBoundingClientRect();
+        x = e.pageX - product_img_rect1.left - lens1.offsetWidth / 2;
+        y = e.pageY - product_img_rect1.top - lens1.offsetHeight / 2;
+
+        //prevent the lens from being positioned outside the image
+        let max_xpos = product_img_rect1.width - lens1.offsetWidth;
+        let max_ypos = product_img_rect1.height - lens1.offsetHeight;
+
+        if (x > max_xpos) {
+            x = max_xpos;
+        }
+        if (x < 0) {
+            x = 0;
+        }
+
+        if (y > max_ypos) {
+            y = max_ypos;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+
+        lens1.style.cssText = `top:${y}px; left:${x}px;`;
+
+        //calculate the magnified_img & lens's aspect ratio
+        cx = magnified_img.offsetWidth / lens1.offsetWidth;
+        cy = magnified_img.offsetHeight / lens1.offsetHeight;
+
+        //set the background position of magnified_img
+        magnified_img.style.cssText = `
+        background: url('${product_img1.src}') 
+        -${x * cx}px -${y * cy}px /
+        ${product_img_rect1.width * cx}px ${product_img_rect1.height * cy}px 
+        no-repeat;
+        `;
+
+        lens1.classList.add('active');
+        magnified_img.classList.add('active');
+    }
+    moveLens2 = (e) => {
+        console.log("X : " + e.pageX + " Y : " + e.pageY);
+        let x, y, cx, cy;
+        //get the position of the cursor
+        const product_img_rect2 = product_img2.getBoundingClientRect();
+        x = e.pageX - product_img_rect2.left - lens2.offsetWidth / 2;
+        y = e.pageY - product_img_rect2.top - lens2.offsetHeight / 2;
+
+        //prevent the lens from being positioned outside the image
+        let max_xpos = product_img_rect2.width - lens2.offsetWidth;
+        let max_ypos = product_img_rect2.height - lens2.offsetHeight;
+
+        if (x > max_xpos) {
+            x = max_xpos;
+        }
+        if (x < 0) {
+            x = 0;
+        }
+
+        if (y > max_ypos) {
+            y = max_ypos;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+
+        lens2.style.cssText = `top:${y}px; left:${x}px;`;
+
+        //calculate the magnified_img & lens's aspect ratio
+        cx = magnified_img.offsetWidth / lens2.offsetWidth;
+        cy = magnified_img.offsetHeight / lens2.offsetHeight;
+
+        //set the background position of magnified_img
+        magnified_img.style.cssText = `
+        background: url('${product_img2.src}') 
+        -${x * cx}px -${y * cy}px /
+        ${product_img_rect2.width * cx}px ${product_img_rect2.height * cy}px 
+        no-repeat;
+        `;
+
+        lens2.classList.add('active');
+        magnified_img.classList.add('active');
+    }
+    moveLens3 = (e) => {
+        console.log("X : " + e.pageX + " Y : " + e.pageY);
+        let x, y, cx, cy;
+        //get the position of the cursor
+        const product_img_rect3 = product_img3.getBoundingClientRect();
+        x = e.pageX - product_img_rect3.left - lens3.offsetWidth / 2;
+        y = e.pageY - product_img_rect3.top - lens3.offsetHeight / 2;
+
+        //prevent the lens from being positioned outside the image
+        let max_xpos = product_img_rect3.width - lens3.offsetWidth;
+        let max_ypos = product_img_rect3.height - lens3.offsetHeight;
+
+        if (x > max_xpos) {
+            x = max_xpos;
+        }
+        if (x < 0) {
+            x = 0;
+        }
+
+        if (y > max_ypos) {
+            y = max_ypos;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+
+        lens3.style.cssText = `top:${y}px; left:${x}px;`;
+
+        //calculate the magnified_img & lens's aspect ratio
+        cx = magnified_img.offsetWidth / lens3.offsetWidth;
+        cy = magnified_img.offsetHeight / lens3.offsetHeight;
+
+        //set the background position of magnified_img
+        magnified_img.style.cssText = `
+        background: url('${product_img3.src}') 
+        -${x * cx}px -${y * cy}px /
+        ${product_img_rect3.width * cx}px ${product_img_rect3.height * cy}px 
+        no-repeat;
+        `;
+
+        lens3.classList.add('active');
+        magnified_img.classList.add('active');
+    }
+
+    leaveLens = () => {
+        lens.classList.remove('active');
+        magnified_img.classList.remove('active');
+    }
+    leaveLens1 = () => {
+        lens1.classList.remove('active');
+        magnified_img.classList.remove('active');
+    }
+    leaveLens2 = () => {
+        lens2.classList.remove('active');
+        magnified_img.classList.remove('active');
+    }
+    leaveLens3 = () => {
+        lens3.classList.remove('active');
+        magnified_img.classList.remove('active');
+    }
+
+
+    magnify(product_img, magnified_img);
+    magnify1(product_img1, magnified_img);
+    magnify2(product_img2, magnified_img);
+    magnify3(product_img3, magnified_img);
+</script>
+
+<!-- Initialize the tooltip component -->
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>

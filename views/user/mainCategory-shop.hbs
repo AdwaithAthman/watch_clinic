@@ -1,0 +1,273 @@
+<style>
+    #menu li {
+        cursor: pointer;
+    }
+
+    .category-dropdown:hover {
+        color: white;
+        background-color: #b7b7b7;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 10px;
+        padding-top: 7px;
+        padding-bottom: 2px;
+        margin-top: 2px;
+        margin-bottom: 10px;
+    }
+
+    a.add-cart {
+        cursor: pointer;
+    }
+
+    a.add-cart:hover {
+        color: red !important;
+    }
+
+    .heart-icon {
+        color: gray;
+    }
+
+    .heart-icon.red {
+        color: red;
+    }
+    
+</style>
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shop the Latest <span style="color:#dc3545">{{categoryName.Category}}</span> Fashion</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <span>{{categoryName.Category}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shop Section Begin -->
+<section class="shop spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shop__product__option">
+                    <div class="row">
+                        {{!-- <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="shop__product__option__left">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="shop__product__option__right">
+                                <p>Sort by Price:</p>
+                                <select>
+                                    <option value="">Low To High</option>
+                                    <option value="">$0 - $55</option>
+                                    <option value="">$55 - $100</option>
+                                </select>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+                <div class="row product__filter ">
+                                {{#each products}}
+            <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix {{this.categoryName}}">
+                <div class="product__item">
+                    <div class="border border-1" style="position:relative">
+                        <div class="product__item__pic set-bg" data-setbg="/product-images/{{this._id}}.jpg"
+                            style="background-size: contain">
+                            {{#if this.catOfferPercentage}}
+                            <span class="label text-bg-danger">{{this.catOfferPercentage}}% Off</span>
+                            {{else if this.productOfferPercentage}}
+                            <span class="label text-bg-danger">{{this.productOfferPercentage}}% Off</span>
+                            {{else}}
+                            <span class="label text-bg-danger">New</span>
+                            {{/if}}
+                            <ul class="product__hover" id="wishlist-section">
+                                {{#if this.isInWishlist}}
+                                <li style="z-index:2"><a onclick="addToWishlist('{{this._id}}')"><i
+                                            class="fa fa-heart fa-lg"
+                                            style="cursor: pointer; color:red;"></i></a><span>Wishlist</span></li>
+
+                                {{else}}
+                                <li style="z-index:2"><a onclick="addToWishlist('{{this._id}}')"><i
+                                            class="fa fa-heart heart-icon fa-lg"
+                                            style="cursor: pointer; color:grey;"></i></a><span>Wishlist</span></li>
+                                {{/if}}
+                            </ul>
+                        </div>
+                        {{!-- child div --}}
+                        <a href="/product?id={{this._id}}">
+                            <div
+                                style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; z-index: 1;background-color: rgba(255, 255, 255, 0);">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="product__item__text">
+                        <h6>{{this.Name}}</h6>
+                        {{!-- <a href="/add-to-cart/{{this._id}}" class="add-cart">+ Add To Cart</a> --}}
+                        <a onclick="addToCart('{{this._id}}','{{this.Stock}}')" class="add-cart"
+                            style="color: #e61d31e8; hover: ">+ Add
+                            To Cart</a>
+                        <div class="rating">
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star" style="color: gold"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        {{#if this.actualPrice }}
+                        <div class="d-flex gap-2">
+                            <h5>₹ {{this.Price}}</h5>
+                            <strike style="font-size: 13px; color: gray;">₹ {{this.actualPrice}}</strike>
+                        </div>
+                        {{else}}
+                        <h5>₹ {{this.Price}}</h5>
+                        {{/if}}
+                        <div class="product__color__select">
+                            <label for="pc-1">
+                                <input type="radio" id="pc-1">
+                            </label>
+                            <label class="active black" for="pc-2">
+                                <input type="radio" id="pc-2">
+                            </label>
+                            <label class="grey" for="pc-3">
+                                <input type="radio" id="pc-3">
+                            </label>
+                        </div>
+                    </div>
+                    {{#if fewStock}}
+                    <p class="text-danger text-center">Only Few Available!</p>
+                    {{/if}}
+                    {{#if noStock}}
+                    <p class="text-danger text-center">Out Of Stock!</p>
+                    {{/if}}
+                </div>
+            </div>
+            {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+
+<!-- Search Begin -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch">+</div>
+        <form class="search-model-form">
+            <input type="text" id="search-input" placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search End -->
+
+<!-- Js Plugins -->
+<!-- Js Plugins -->
+<script src="./users/js/jquery-3.3.1.min.js"></script>
+<script src="./users/js/bootstrap.min.js"></script>
+<script src="./users/js/jquery.nice-select.min.js"></script>
+<script src="./users/js/jquery.nicescroll.min.js"></script>
+<script src="./users/js/jquery.magnific-popup.min.js"></script>
+<script src="./users/js/jquery.countdown.min.js"></script>
+<script src="./users/js/jquery.slicknav.js"></script>
+<script src="./users/js/mixitup.min.js"></script>
+<script src="./users/js/owl.carousel.min.js"></script>
+<script src="./users/js/main.js"></script>
+
+<script>
+    addToCart = (productId, productStock) => {
+        const stock = parseInt(productStock)
+        if (stock === 0) {
+            swal({
+                icon: "error",
+                title: "Oops..!",
+                text: "Out Of Stock!",
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        }
+        else {
+            $.ajax({
+                url: '/add-to-cart/' + productId,
+                method: 'get',
+                success: (response) => {
+                    if (response.maxLimit) {
+                        swal({
+                            title: "Max Limit Reached",
+                            icon: "warning",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    }
+                    else if (response.status) {
+                        let count = $('.cart-count').html()
+                        count = parseInt(count) + 1
+                        $('.cart-count').html(count)
+                        swal("Successfully added to Cart", {
+                            icon: "success",
+                        }).then(() => {
+                            // Store the current scroll position
+                            sessionStorage.setItem('scrollPosition', window.pageYOffset);
+                            location.reload()
+                            // Restore the scroll position after the page reloads
+                            window.scrollTo(0, sessionStorage.getItem('scrollPosition'));
+                        });
+
+                    }
+                    else {
+                        location.href = '/login'
+                    }
+                }
+            })
+        }
+    }
+</script>
+
+
+<script>
+    addToWishlist = (productId) => {
+
+        $.ajax({
+            url: '/add-to-wishlist/' + productId,
+            method: 'get',
+            success: (response) => {
+                if (response.add) {
+                    //heartIcon.classList.add('red');
+                    let count = $('.wishlist-count').html()
+                    count = parseInt(count) + 1
+                    $('.wishlist-count').html(count)
+                    swal("Successfully added to Wishlist", {
+                        icon: "success",
+                    }).then(() => {
+                        // Reloading the wishlist section of the page
+                        location.reload()
+                    });
+
+                }
+                else if (response.remove) {
+                    //heartIcon.classList.remove('red');
+                    let count = $('.wishlist-count').html()
+                    count = parseInt(count) - 1
+                    $('.wishlist-count').html(count)
+                    swal("The Product has been removed from the Wishlist")
+                        .then(() => {
+                            // Reloading the wishlist section of the page
+                            location.reload()
+                        });
+                }
+                else {
+                    location.href = '/login'
+                }
+            }
+        })
+
+    }
+</script>

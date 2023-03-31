@@ -1,0 +1,320 @@
+<style>
+    #headBannerTable_length {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+        position: sticky;
+        z-index: 10;
+        left: 0;
+        background-color: #f9fafb;
+    }
+
+    #headBannerTable_length select{
+        background-color: white;
+    }
+
+    #headBannerTable_filter {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+    }
+
+    #headBannerTable_filter input{
+        background-color: white;
+    }
+
+    #headBannerTable_info {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+        position: sticky;
+        z-index: 10;
+        left: 0;
+        background-color: #f9fafb;
+    }
+
+    #headBannerTable_paginate {
+        font-size: 14px;
+        padding: 7.5px 15px 0px 15px;
+    }
+
+    table {
+        border-width: 1px
+    }
+
+    tbody,
+    td,
+    tfoot,
+    th,
+    thead,
+    tr {
+        border-color: inherit;
+        border-style: solid;
+        border-width: 0.5px;
+        column
+    }
+
+    #exclusiveDealsTable_length {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+        position: sticky;
+        z-index: 10;
+        left: 0;
+        background-color: #f9fafb;
+    }
+
+    #exclusiveDealsTable_length select{
+        background-color: white;
+    }
+
+    #exclusiveDealsTable_filter {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+    }
+
+    #exclusiveDealsTable_filter input{
+        background-color: white;
+    }
+
+    #exclusiveDealsTable_info {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+        position: sticky;
+        z-index: 10;
+        left: 0;
+        background-color: #f9fafb;
+    }
+
+    #exclusiveDealsTable_paginate {
+        font-size: 14px;
+        padding: 7.5px 15px 0px 15px;
+    }
+
+    table {
+        border-width: 1px
+    }
+
+    tbody,
+    td,
+    tfoot,
+    th,
+    thead,
+    tr {
+        border-color: inherit;
+        border-style: solid;
+        border-width: 0.5px;
+        column
+    }
+
+</style>
+
+
+{{!-- -------------------------------------head banner------------------------------------- --}}
+<main class="h-full pb-16">
+    <div class="container grid px-6 mx-auto">
+        <div class="d-flex align-items-center justify-content-between">
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Head Banner
+            </h2>
+            <div>
+                <a href="/admin/add-head-banner"><button
+                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Add New
+                    </button></a>
+            </div>
+        </div>
+
+        <!-- With avatar -->
+        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table id="headBannerTable" class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3" style="position:sticky; z-index:10; left: 0; background-color: white;">Main Heading</th>
+                            <th class="px-4 py-3">Tagline</th>
+                            <th class="px-4 py-3 text-center">Image</th>
+                            <th class="px-4 py-3">Description</th>
+                            <th class="px-4 py-3">Link</th>
+                            <th class="px-4 py-3">Edit</th>
+                            <th class="px-4 py-3">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        {{#each allHeadBanners}}
+                        <tr class="text-gray-700 dark:text-gray-400">
+                            <td class="px-4 py-3" style="position:sticky; z-index:10; left: 0; background-color: #f9fafb;">
+                                <div class="flex items-center text-sm">
+                                    <!-- Avatar with inset shadow -->
+                                    <div>
+                                        <p class="font-semibold">{{this.mainHeading}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{this.tagline}}
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center text-sm" style="width: 90px;">
+                                    <!-- Avatar with inset shadow -->
+                                    <div class="relative hidden mr-3  md:block" style="width:auto; height:auto">
+                                        <img id="sample-img" class="" src="/users/img/hero/{{this._id}}.jpg" alt=""
+                                            loading="lazy" style="width:90px; height:90px; object-fit: cover;" />
+                                        <div class="absolute inset-0" aria-hidden="true"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm text-wrap" style="max-width: 300px">
+                                {{this.description}}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{this.redirectLink}}
+                            </td>
+                            <td class="px-4 py-3 text-xs">
+                                <a href="/admin/edit-head-banner/{{this._id}}">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                        Edit
+                                    </span></a>
+                            </td>
+                            <td class="px-4 py-3 text-xs">
+                                <button type="button" onclick="deleteLink(this)"
+                                    data-link="/admin/delete-head-banner/{{this._id}}" id="delete-link">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                                        Delete
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{{!-- ---------------------------------exclusive deal------------------------------------- --}}
+<main class="h-full pb-16 ">
+    <div class="container grid px-6 mx-auto">
+        <div class="d-flex align-items-center justify-content-between">
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Exclusive Deals
+            </h2>
+            <div class="d-flex gap-3">
+                <a href="/admin/add-exclusive-deal"><button
+                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Add New
+                    </button></a>
+            </div>
+        </div>
+
+        <!-- With avatar -->
+        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table id="exclusiveDealsTable" class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3">Product</th>
+                            <th class="px-4 py-3">Caption</th>
+                            <th class="px-4 py-3">Catch Phrase</th>
+                            <th class="px-4 py-3">Edit</th>
+                            <th class="px-4 py-3">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        {{#each allExclusiveDeals}}
+                        <tr class="text-gray-700 dark:text-gray-400">
+                            <td class="px-4 py-3">
+                                <div class="flex items-center text-sm">
+                                    <!-- Avatar with inset shadow -->
+                                    <div>
+                                        <p class="font-semibold">{{this.ProductName}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{this.caption}}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{this.catchPhrase}}
+                            </td>
+                            <td class="px-4 py-3 text-xs"><a href="/admin/edit-exclusive-deal/{{this._id}}">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                        Edit
+                                    </span></a>
+                            </td>
+                            <td class="px-4 py-3 text-xs">
+                                <button type='button' data-link="/admin/delete-exclusive-deal/{{this._id}}"
+                                    onclick="deleteExclusiveDeal(this)">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                                        Delete
+                                    </span></button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script>
+    // Get the link element
+
+    function deleteLink(e) {
+        // Attach a click event listener
+        if (confirm("Are you sure you want to delete?")) {
+
+            // Send a DELETE request to the link's href
+            try {
+                fetch(e.getAttribute("data-link"), { method: 'DELETE', credentials: "include" })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload()
+                            // Do something if the delete was successful
+                        } else {
+                            // Handle the error
+                        }
+                    });
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
+    function deleteExclusiveDeal(e) {
+        if (confirm('Are you sure you want to delete?')) {
+            try {
+                fetch(e.getAttribute('data-link'), { method: 'DELETE', credentials: 'include' }).then((response) => {
+                    if (response.ok) {
+                        // Store the current scroll position
+                        sessionStorage.setItem('scrollPosition', window.pageYOffset);
+                        location.reload()
+                        // Restore the scroll position after the page reloads
+                        window.scrollTo(0, sessionStorage.getItem('scrollPosition'));
+                    }
+                    else { }
+                })
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#headBannerTable').DataTable();
+    });
+
+    $(document).ready(function () {
+        $('#exclusiveDealsTable').DataTable();
+    });
+</script>

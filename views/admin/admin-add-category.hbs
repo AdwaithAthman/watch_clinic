@@ -1,0 +1,36 @@
+<div class="flex items-start p-6 bg-gray-50 my-5">
+    <div class="flex-1 max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl ">
+        <div class="flex flex-col overflow-y-auto md:flex-row">
+            <div class="h-32 md:h-auto md:w-1/2">
+                <img aria-hidden="true" class="object-cover w-full h-full "
+                    src="/admin/img/category-page.avif" alt="Office" />
+            </div>
+            <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+                <form action="/admin/admin-add-category" method="post" enctype="multipart/form-data" style="width:100%">
+                    <div class="w-full">
+                        {{#if categoryErr}}
+                        <div class="alert alert-danger text-center">
+                            <strong>Category already exists!</strong>
+                        </div>
+                        {{/if}}
+                        <h1 class="mb-4 text-xl font-semibold text-gray-700">
+                            Add Category
+                        </h1>
+                        <label class="block text-sm">
+                            <span class="text-gray-700">Enter the Category name</span>
+                            <input
+                                class="block w-full mt-1 text-sm  focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="Category name"  name="Category"/>
+                        </label>
+
+                        <!-- You should use a button here, as the anchor is only used for the example  -->
+                        <button
+                            class=" mt-4 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" type="submit">
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

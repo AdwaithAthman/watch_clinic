@@ -1,0 +1,372 @@
+<style>
+    .close-icon {
+        border: none;
+        background-color: transparent;
+    }
+</style>
+
+{{#if cartCount}}
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shopping Cart </h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Shopping Cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+{{else}}
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <div class="d-flex gap-2">
+                        <h4>Your Cart is </h4>
+                        <h4 style="color: #e53637"> Empty</h4>
+                    </div>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Shopping Cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{/if}}
+<!-- Breadcrumb Section End -->
+
+
+<!-- Shopping Cart Section Begin -->
+{{#if cartCount}}
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 pr-5">
+                <div class="shopping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <div id="isActiveFalseCartCount" class="d-none">{{isActiveFalseCartCount}}</div>
+                            {{#each products}}
+                            {{#if this.Product.isActive}}
+                            <tr>
+                                <td class="product__cart__item pr-4">
+                                    <div class="product__cart__item__pic">
+                                        <img src="/product-images/{{this.Product._id}}.jpg" alt=""
+                                            style="height: 90px; width: 90px, object-fit: contain">
+                                    </div>
+                                    <div class="product__cart__item__text">
+                                        <h6>{{this.Product.Name}}</h6>
+                                        <h5>₹ {{this.Product.Price}}</h5>
+                                        <div id="productStock{{this.Product._id}}" class="d-none">{{this.Product.Stock}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="quantity__item">
+                                    <div class="quantity">
+                                        <div class="pro-qty-2 d-flex justify-content-center align-items-center">
+                                            {{#if this.notQuantOne}}
+                                            <span class="fa fa-angle-left dec qtybtn" id="dec-icon"
+                                                onclick="changeQuantity('{{this._id}}','{{this.Product._id}}','{{../User._id}}', -1)"
+                                                style="font-size:22px; display:block"></span>
+                                            {{else}}
+                                            <span class="fa fa-angle-left dec qtybtn" id="dec-icon"
+                                                onclick="changeQuantity('{{this._id}}','{{this.Product._id}}','{{../User._id}}', -1)"
+                                                style="font-size:22px; display:none"></span>
+                                            {{/if}}
+
+                                            <span id="qtyId{{this.Product._id}}" class="p-3">{{this.Quantity}}</span>
+                                            <span class="fa fa-angle-right inc qtybtn"
+                                                onclick="checkQuantity('{{this.Quantity}}');changeQuantity('{{this._id}}','{{this.Product._id}}','{{../User._id}}', 1);"
+                                                style="font-size:22px;"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                {{!-- {{#if this.Total}} --}}
+                                <td class="cart__price" id="itemTotal{{this.Product._id}}">₹ {{this.Total}}</td>
+                                {{!-- {{else}}
+                                <td class="cart__price" id="itemTotal{{this.Product._id}}">₹ {{this.Product.Price}}</td>
+                                {{/if}} --}}
+                                <a href="">
+                                    <td class="cart__close">
+                                        <button class="close-icon" onclick="removeCart('{{this.Product._id}}')"><i
+                                                class="fa fa-close"></i>
+                                        </button>
+                                    </td>
+                                </a>
+                            </tr>
+                            {{else}}
+                            <tr>
+                                <td class="product__cart__item pr-4">
+                                    <div class="product__cart__item__pic">
+                                        <img src="/product-images/{{this.Product._id}}.jpg" alt=""
+                                            style="height: 90px; width: 90px, object-fit: contain">
+                                    </div>
+                                    <div class="product__cart__item__text">
+                                        <h6>{{this.Product.Name}}</h6>
+                                        <h5>₹ {{this.Product.Price}}</h5>
+                                        <div id="productStock{{this.Product._id}}" class="d-none">{{this.Product.Stock}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="quantity__item">
+                                    <div class="quantity">
+                                        <div class="pro-qty-2 d-flex justify-content-center align-items-center">
+                                            {{#if this.notQuantOne}}
+                                            <span id="dec-icon" style="font-size:22px; display:block"></span>
+                                            {{else}}
+                                            <span id="dec-icon" style="font-size:22px; display:none"></span>
+                                            {{/if}}
+
+                                            <span id="qtyId{{this.Product._id}}" class="p-3">{{this.Quantity}}</span>
+                                            <span style="font-size:22px;"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Product is not available</td>
+                                <a href="">
+                                    <td class="cart__close">
+                                        <button class="close-icon" onclick="removeCart('{{this.Product._id}}')"><i
+                                                class="fa fa-close"></i>
+                                        </button>
+                                    </td>
+                                </a>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="float-right">
+                    <div class="continue__btn">
+                        <a href="/">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart__total">
+                    <h6>Cart total</h6>
+                    <ul>
+                        <li> Sub Total <span>₹<span id="total">{{total}}</span></span></li>
+                    </ul>
+                    <a href="/checkout" class="primary-btn" id="checkout-btn">Proceed to checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
+{{else}}
+<div class="container text-center">
+    <img class="py-3" style="width:500px" src="./users/img/empty-cart.svg" alt="">
+</div>
+{{/if}}
+
+<!-- Js Plugins -->
+<script src="./users/js/jquery-3.3.1.min.js"></script>
+<script src="./users/js/bootstrap.min.js"></script>
+<script src="./users/js/jquery.nice-select.min.js"></script>
+<script src="./users/js/jquery.nicescroll.min.js"></script>
+<script src="./users/js/jquery.magnific-popup.min.js"></script>
+<script src="./users/js/jquery.countdown.min.js"></script>
+<script src="./users/js/jquery.slicknav.js"></script>
+<script src="./users/js/mixitup.min.js"></script>
+<script src="./users/js/owl.carousel.min.js"></script>
+<script src="./users/js/main.js"></script>
+
+
+<script>
+
+    checkQuantity = (quant) => {
+        quant = Number(quant);
+    }
+    changeQuantity = (cartId, productId, userId, count) => {
+        // let quant = Number(document.getElementById('qtyId' + productId).innerText)
+        const stock = parseInt(document.getElementById('productStock' + productId).innerHTML)
+        let quantity = parseInt(document.getElementById('qtyId' + productId).innerHTML)
+        count = parseInt(count)
+        if (quantity < stock || count === -1) {
+            $.ajax({
+                url: '/change-product-quantity',
+                data: {
+                    cart: cartId,
+                    product: productId,
+                    count: count,
+                    quantity: quantity,
+                    user: userId
+                },
+                method: 'post',
+                success: (response) => {
+                    if (response.removeProduct) {
+                        swal({
+                            title: "Are you sure?",
+                            text: "This item will be deleted from your cart",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true
+                        }).then(() => {
+                            location.reload();
+                        })
+                    }
+
+                    else {
+                        document.getElementById('qtyId' + productId).innerHTML = quantity + count
+                        document.getElementById('total').innerHTML = response.total
+                        document.getElementById('itemTotal' + productId).innerHTML = '₹ ' + response.totalPriceOfOneProduct
+                        location.reload(true);
+                    }
+                }
+            })
+        }
+        else {
+            swal({
+                title: "Max Limit Reached",
+                icon: "warning",
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        }
+
+
+        /*hide=()=>{
+                    let quantity = let quantity = parseInt(document.getElementById('qtyId'+ productId).innerHTML)
+                    setHide(quantity)
+                }
+
+                setHide = (quantity) => {
+                    if (quantity == 1 && count == -1){
+                        document.getElementById('dec-icon').style.visibility = "hidden";
+                    }
+                    else{
+                        document.getElementById('dec-icon').style.visibility = "visible";
+                    }
+                }*/
+
+    }
+</script>
+
+<script>
+    removeCart = (productId) => {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this Product!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '/remove-from-cart/' + productId,
+                        method: 'get',
+                        success: (response) => {
+                            if (response.status) {
+                                let count = $('.cart-count').html()
+                                count = parseInt(count) - 1
+                                $(".cart-count").html(count)
+
+                                location.reload()
+                            }
+                        }
+                    })
+                    swal("The Product has been deleted from the Cart", {
+                        icon: "success",
+                    });
+                }
+                else {
+                    swal("The Product is safe in the Cart");
+                }
+            })
+    }
+
+
+    //script for swal when clicked on proceed to checkout
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const falseCartCount = parseInt(document.getElementById('isActiveFalseCartCount').innerHTML)
+
+    checkoutBtn.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default link behavior
+
+        if (falseCartCount === 0) {
+            window.location.href = checkoutBtn.href;
+        }
+        else {
+            swal({
+                title: "Remove the unavailable products from the Cart",
+                icon: "warning",
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        }
+
+    });
+    
+</script>
+
+<script>
+    addToCart = (productId) => {
+        $.ajax({
+            url: '/add-to-cart/' + productId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    let count = $('.cart-count').html()
+                    count = parseInt(count) + 1
+                    swal("Successfully added to Cart", {
+                        icon: "success",
+                    });
+                    $('.cart-count').html(count)
+                }
+                else if (response.status == "noStock") {
+                    swal({
+                        icon: "error",
+                        title: "Oops..!",
+                        text: "Out Of Stock!",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                }
+                else if (response.status == "fewStock") {
+                    swal({
+                        icon: "error",
+                        title: "Oops..!",
+                        text: "Out Of Stock!",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                }
+                else if (response.status == "maxLimitStock") {
+                    swal({
+                        icon: "warning",
+                        title: "Oops..!",
+                        text: "Limit Is Reached!",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                }
+                else {
+                    location.href = '/login'
+                }
+            }
+        })
+    }
+</script>

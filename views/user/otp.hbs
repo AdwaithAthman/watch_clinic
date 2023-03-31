@@ -1,0 +1,117 @@
+
+<div class="flex items-center min-h-screen p-6 bg-gray-50">
+  <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl ">
+    <div class="flex flex-col overflow-y-auto md:flex-row">
+      <div class="h-32 md:h-auto md:w-1/2">
+        <img aria-hidden="true" class="object-cover w-full h-full otp-page-image " src="/admin/img/otp-page-image.jpg"
+          alt="Office" />
+      </div>
+      <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+        <form method="post" action="/otp" style="width:100%">
+          <div class="w-full">
+            <h1 class="mb-4 text-xl font-semibold text-gray-700 text-center">
+              OTP Verification
+            </h1>
+            <label class="block text-sm">
+              <span class="text-gray-700">Enter the OTP</span>
+              <input type="text" value="{{phone}}" name="Phone" hidden />
+              <input
+                class="block w-full mt-1 text-sm  focus:border-purple-400 focus:outline-none focus:shadow-outline-purple form-input"
+                placeholder="******"  name="Otp" />
+            </label>
+            {{!-- resend timer --}}
+            {{!-- <input type="text" value="{{phone}}" hidden>
+              <div class="text-sm ">Time left = <span id="timer"></span></div>
+              <div class="mt-1" id="hide-send" style="visibility: hidden;">
+
+                <button id="regenerateOTP" class="btn btn-warning text-sm btn_shadow mt-1" onclick="resendotp('{{this.Phone}}')"
+                  style="border-radius: 0;">Resend OTP </button>
+              </div> --}}
+
+            <!-- You should use a button here, as the anchor is only used for the example  -->
+              <button type="submit" class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Validate</button>
+            <p class="mt-1 text-center">
+              <a class="text-sm font-medium text-purple-600 hover:underline" href="#">
+                Resend
+              </a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Js Plugins -->
+    <script src="./users/js/jquery-3.3.1.min.js"></script>
+    <script src="./users/js/bootstrap.min.js"></script>
+    <script src="./users/js/jquery.nice-select.min.js"></script>
+    <script src="./users/js/jquery.nicescroll.min.js"></script>
+    <script src="./users/js/jquery.magnific-popup.min.js"></script>
+    <script src="./users/js/jquery.countdown.min.js"></script>
+    <script src="./users/js/jquery.slicknav.js"></script>
+    <script src="./users/js/mixitup.min.js"></script>
+    <script src="./users/js/owl.carousel.min.js"></script>
+    <script src="./users/js/main.js"></script>
+
+
+  {{!-- <script>
+
+  function resendotp(phone) {
+
+
+    $.ajax({
+      url: "/get-otp",
+
+      data: { Phone: phone },
+      method: 'post',
+      success: function (data) {
+        swal({ title: "!", text: "One Time Password is sent again", timer: 2000 });
+      },
+      error: function () {
+        swal({ title: "Error!", text: "We are facing technical error!", type: "error", timer: 2000, confirmButtonText: "Ok" });
+        return false;
+      }
+    });
+
+  }
+</script>
+
+<script>
+  function showdiv() {
+    document.getElementById('hide-send').style.visibility = "visible";
+  }
+</script>
+
+<script>
+  let timerOn = true;
+
+  function timer(remaining) {
+    var m = Math.floor(remaining / 60);
+    var s = remaining % 60;
+
+    m = m < 10 ? '0' + m : m;
+    s = s < 10 ? '0' + s : s;
+    document.getElementById('timer').innerHTML = m + ':' + s;
+    remaining -= 1;
+
+    if (remaining >= 0 && timerOn) {
+      setTimeout(function () {
+        timer(remaining);
+      }, 1000);
+      return;
+    }
+
+    if (!timerOn) {
+      // Do validate stuff here
+      return;
+    }
+
+    // Do timeout stuff here
+
+    showdiv()
+  }
+
+  timer(90);
+</script> --}}

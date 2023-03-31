@@ -1,0 +1,136 @@
+<style>
+    #listCouponTable_length {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+        position: sticky;
+        z-index: 10;
+        left: 0;
+        background-color: #f9fafb;
+    }
+
+    #listCouponTable_length select{
+        background-color: white;
+    }
+
+    #listCouponTable_filter {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+    }
+
+    #listCouponTable_filter input{
+        background-color: white;
+    }
+
+    #listCouponTable_info {
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+        position: sticky;
+        z-index: 10;
+        left: 0;
+        background-color: #f9fafb;
+    }
+
+    #listCouponTable_paginate {
+        font-size: 14px;
+        padding: 7.5px 15px 0px 15px;
+    }
+
+    table {
+        border-width: 1px
+    }
+
+    tbody,
+    td,
+    tfoot,
+    th,
+    thead,
+    tr {
+        border-color: inherit;
+        border-style: solid;
+        border-width: 0.5px;
+        column
+    }
+
+</style>
+
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container grid px-6 mx-auto">
+        <div class="d-flex align-items-center justify-content-between">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Coupon List
+        </h2>
+             <div>
+                <a href="/admin/add-coupon"><button
+                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                >
+                  Add Coupon
+                </button></a>
+              </div>
+              </div>
+
+        <!-- With avatar -->
+        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table id="listCouponTable" class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3">Coupon Code</th>
+                            <th class="px-4 py-3">Discount(%)</th>
+                            <th class="px-4 py-3">Coupon Validity</th>
+                            <th class="px-4 py-3">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        {{#each coupons}}
+                        <tr class="text-gray-700 dark:text-gray-400">
+                            <td class="px-4 py-3 text-sm">
+                                <b>{{this.coupon}}</b>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                               {{this.offer}}%
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                               {{this.starting}} To {{this.expiry}}
+                            </td>
+                            <td class="px-4 py-3 text-xs">
+                                <a onclick="deleteCoupon('{{this.coupon}}')" role="button">
+                                <span
+                                    class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                                    Delete
+                                </span>
+                                </a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    function deleteCoupon(couponId){
+        $.ajax(
+        alert('Are You Sure you want to delete the Coupon? '+couponId),
+          { 
+            url: 'deleteCoupon',
+            method: 'delete',
+            data: {
+                couponId: couponId
+            },
+            success:(response)=>{
+                alert('Coupon deleted Succesfully!')
+                location.reload()
+            }
+        })   
+
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#listCouponTable').DataTable();
+    });
+</script>

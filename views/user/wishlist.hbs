@@ -1,0 +1,208 @@
+<style>
+    .btn {
+        background-color: white;
+        border: 1px solid black;
+        font-weight: bold;
+    }
+
+    .shopping__cart__table table thead tr th {
+        padding-bottom: 12px;
+    }
+
+    .shopping__cart__table table tbody tr td.product__cart__item {
+        width: 700px;
+    }
+</style>
+
+{{#if wishlistCount}}
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Wishlist</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Wishlist</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+{{else}}
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <div class="d-flex gap-2">
+                        <h4>Your Wishlist is </h4>
+                        <h4 style="color: #e53637"> Empty</h4>
+                    </div>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Wishlist</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{/if}}
+<!-- Breadcrumb Section End -->
+
+{{#if wishlistCount}}
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="shopping__cart__table">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Cart Option</th>
+                        <th>Remove Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each products}}
+                    <tr>
+                        <td class="product__cart__item pr-4 align middle">
+                            <a href="/product?id={{this.Product._id}}">
+                                <div class="product__cart__item__pic" style="margin-right: -60px">
+                                    <img src="/product-images/{{this.Product._id}}.jpg" alt=""
+                                        style="height: 90px; width: 90px; object-fit: contain">
+                                </div>
+                            </a>
+                            <a href="/product?id={{this.Product._id}}">
+                                <div class="product__cart__item__text">
+                                    <h6>{{this.Product.Name}}</h6>
+                                    <h5>₹ {{this.Product.Price}}</h5>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="align-middle">
+                            {{#if this.Product.isActive}}
+                            <button type="button" class="btn btn-outline-success align-middle"
+                                onclick="addToCart('{{this.Product._id}}','{{this.Product.Stock}}')">Add to
+                                Cart</button>
+                            {{else}}
+                            <button type="button" class="btn btn-outline-success align-middle"
+                                onclick="addToCart('{{this.Product._id}}','{{this.Product.Stock}}')" disabled>Add to
+                                Cart</button>
+                            <h6 style="color:grey" class="pt-2">Product is not available</h6>
+                            {{/if}}
+                        </td>
+                        <td class="align-middle"><button type="button" class="btn btn-outline-danger align-middle"
+                                onclick="removeProductWishlist('{{this.Product._id}}')">Remove</button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
+{{else}}
+<div class="container text-center">
+    <img class="py-5" style="width:500px" src="./users/img/empty-wishlist.svg" alt="">
+</div>
+{{/if}}
+
+<!-- Js Plugins -->
+<script src="./users/js/jquery-3.3.1.min.js"></script>
+<script src="./users/js/bootstrap.min.js"></script>
+<script src="./users/js/jquery.nice-select.min.js"></script>
+<script src="./users/js/jquery.nicescroll.min.js"></script>
+<script src="./users/js/jquery.magnific-popup.min.js"></script>
+<script src="./users/js/jquery.countdown.min.js"></script>
+<script src="./users/js/jquery.slicknav.js"></script>
+<script src="./users/js/mixitup.min.js"></script>
+<script src="./users/js/owl.carousel.min.js"></script>
+<script src="./users/js/main.js"></script>
+
+<script>
+    addToCart = (productId, productStock) => {
+        const stock = parseInt(productStock)
+        if (stock === 0) {
+            swal({
+                icon: "error",
+                title: "Oops..!",
+                text: "Out Of Stock!",
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        }
+        else {
+            $.ajax({
+                url: '/add-to-cart/' + productId,
+                method: 'get',
+                success: (response) => {
+                    if (response.maxLimit) {
+                        swal({
+                            title: "Max Limit Reached",
+                            icon: "warning",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    }
+                    else if (response.status) {
+                        let count = $('.cart-count').html()
+                        count = parseInt(count) + 1
+                        $('.cart-count').html(count)
+                        swal("Successfully added to Cart", {
+                            icon: "success",
+                        }).then(() => {
+                            location.reload()
+                        });
+
+                    }
+                    else {
+                        location.href = '/login'
+                    }
+                }
+            })
+        }
+    }
+</script>
+
+<script>
+    removeProductWishlist = (productId) => {
+        swal({
+            title: "Are you sure?",
+            text: "You want to remove the product from the Wishlis!t",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '/remove-from-wishlist/' + productId,
+                        method: 'get',
+                        success: (response) => {
+                            if (response.status) {
+                                let count = $('.wishlist-count').html()
+                                count = parseInt(count) - 1
+                                $('.wishlist-count').html(count)
+                                location.reload()
+                            }
+                        }
+                    })
+                    swal("The Product has been removed from the Wishlist", {
+                        icon: "success",
+                    });
+                }
+                else {
+                    swal("The Product is safe in the Wishlist");
+                }
+            })
+    }
+</script>

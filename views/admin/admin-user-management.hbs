@@ -1,0 +1,113 @@
+<style>
+    #userManagementTable_length{
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+    }
+
+    #productManagementTable_length select{
+        background-color: white;
+    }
+
+    #userManagementTable_filter{
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+    }
+
+    #productManagementTable_filter input{
+        background-color: white;
+    }
+
+    #userManagementTable_info{
+        font-size: 14px;
+        padding: 15px 15px 15px 15px;
+    }
+
+    #userManagementTable_paginate{
+        font-size: 14px;
+        padding: 7.5px 15px 0px 15px;
+    }
+
+    table{
+        border-width: 1px
+    }
+    
+    tbody, td, tfoot, th, thead, tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0.5px;
+}
+</style>
+
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container grid px-6 mx-auto">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            User List
+        </h2>
+
+        <!-- With avatar -->
+        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table id="userManagementTable" class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3">Sl No.</th>
+                            <th class="px-4 py-3">Name</th>
+                            <th class="px-4 py-3">Email</th>
+                            <th class="px-4 py-3">Phone</th>
+                            <th class="px-4 py-3">Block/Unblock</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        {{#each users}}
+                        <tr class="text-gray-700 dark:text-gray-400">
+                             <td class="px-4 py-3 text-sm">
+                               <p class="font-semibold">{{inc @index}}</p>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center text-sm">
+                                    <!-- Avatar with inset shadow -->
+                                    <div>
+                                        <p class="font-semibold">{{this.Name}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                <p class="font-semibold">{{this.Email}}</p>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                <p class="font-semibold">{{this.Phone}}</p>
+                            </td>
+                            {{#if this.blocked}}
+                            <td class="px-4 py-3 text-xs">
+                                <span>
+                                    <a class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100"
+                                        href="/admin/block-status?id={{this._id}}" role="button"
+                                        onclick="return confirm('Are you sure, you want to unblock {{this.Name}} ?')">
+                                        Unblock
+                                    </a>
+                                </span>
+                            </td>
+                            {{else}}
+                            <td class="px-4 py-3 text-xs">
+                                <span class="">
+                                    <a class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                                        href="/admin/block-status?id={{this._id}}" role="button"
+                                        onclick="return confirm('Are you sure you want to block {{this.Name}} ?')">Block</a>
+                                </span>
+                            </td>
+                            {{/if}}
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    $(document).ready( function () {
+    $('#userManagementTable').DataTable();
+} );
+</script>

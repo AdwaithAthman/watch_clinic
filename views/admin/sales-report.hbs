@@ -1,0 +1,133 @@
+<main class="h-full pb-16 overflow-y-auto " style="background-color: white">
+    <div class="container px-6 mx-auto grid">
+
+        <h2 class="my-6 text-2xl font-semibold text-dark">
+            Sale Report
+        </h2>
+        <div class="w-full overflow-hidden rounded-lg shadow-xs ">
+            <div class="w-full overflow-x-auto">
+
+
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full whitespace-no-wrap" id="orderTable">
+                        <thead>
+                            <tr
+                                class="text-xs font-semibold tracking-wide text-left uppercase bg-secondary border border-2 border-dark" style="color: white;">
+                                <th class="px-4 py-3">Date</th>
+                                <th class="px-4 py-3">Status</th>
+                                <th class="px-4 py-3">Shipping Address</th>
+                                <th class="px-4 py-3">Total Amount</th>
+                                <th class="px-4 py-3">Payment mode</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-light">
+                            {{#each salesData}}
+
+                            <tr class="text-gray">
+                                <td class="px-4 py-3 text-sm">
+
+                                    <p> {{this.date}}</p>
+
+                                </td>
+
+
+                                <td class="px-4 py-3 text-sm">
+                                    <p> {{this.status}}</p>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{this.deliveryDetails.firstName}} {{this.deliveryDetails.lastName}}<br>
+                                    {{this.deliveryDetails.addressLine_1}}<br>
+                                    {{this.deliveryDetails.addressLine_2}}<br>
+                                    {{this.deliveryDetails.city}}, {{this.deliveryDetails.state}}, {{this.deliveryDetails.country}}<br>
+                                    Pin: {{this.deliveryDitails.postcode}}
+                                </td>
+
+
+                                <td class="px-4 py-3 text-sm">
+                                   ₹ {{this.totalAmount}}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{this.paymentMethod}}
+                                </td>
+                            </tr>
+                            
+                            {{/each}}
+                            
+
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</main>
+
+
+{{!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+<style>
+  tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+</style>
+
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+ </script>
+
+ <script>
+  $(document).ready(function () {
+    // Setup - add a text input to each footer cell
+    $('#orderTable tfoot th').each(function () {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+ 
+    // DataTable
+    var table = $('#orderTable').DataTable({
+      dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print',
+            
+        ],
+        
+        initComplete: function () {
+            // Apply the search
+            this.api()
+                .columns()
+                .every(function () {
+                    var that = this;
+ 
+                    $('input', this.footer()).on('keyup change clear', function () {
+                        if (that.search() !== this.value) {
+                            that.search(this.value).draw();
+                        }
+                    });
+                });
+        },
+    });
+});
+</script>
