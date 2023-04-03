@@ -8,7 +8,7 @@
         background-color: #f9fafb;
     }
 
-    #productManagementTable_length select{
+    #productManagementTable_length select {
         background-color: white;
     }
 
@@ -17,7 +17,7 @@
         padding: 15px 15px 15px 15px;
     }
 
-    #productManagementTable_filter input{
+    #productManagementTable_filter input {
         background-color: white;
     }
 
@@ -50,7 +50,6 @@
         border-width: 0.5px;
         column
     }
-
 </style>
 
 <main class="h-full pb-16 overflow-y-auto">
@@ -95,7 +94,7 @@
                             <td class="px-4 py-3 text-wrap"
                                 style="position:sticky; z-index:1; left: 0; background-color: #f9fafb; max-width: 250px">
                                 <div class="flex items-center text-sm">
-                                        <p class="font-semibold">{{this.Name}}</p>
+                                    <p class="font-semibold">{{this.Name}}</p>
                                 </div>
                             </td>
                             <td class="px-4 py-3">
@@ -111,7 +110,8 @@
                             <td class="px-4 py-3 text-sm">
                                 ₹{{this.Price}}
                             </td>
-                            <td class="px-4 py-3 text-sm text-truncate" style="max-width: 300px">{{this.Description}}</td>
+                            <td class="px-4 py-3 text-sm text-truncate" style="max-width: 300px">{{this.Description}}
+                            </td>
                             <td class="px-4 py-3 text-sm">
                                 {{this.Stock}}
                             </td>
@@ -124,12 +124,13 @@
                                         Edit
                                     </span></a>
                             </td>
-                            <td class="px-4 py-3 text-xs"><a href="/admin/admin-delete-product/{{this._id}}"
-                                    onclick="return confirm('Are you sure you want to delete {{this.Name}} ?')">
+                            <td class="px-4 py-3 text-xs">
+                                <a href="#" class="delete-link" data-id="{{this._id}}" data-name="{{this.Name}}">
                                     <span
                                         class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
                                         Delete
-                                    </span></a>
+                                    </span>
+                                </a>
                             </td>
                         </tr>
                         {{/each}}
@@ -141,6 +142,29 @@
 </main>
 
 <script>
+    $(document).ready(function () {
+        $('.delete-link').click(function (event) {
+            event.preventDefault();
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+            const confirmDelete = confirm(`Are you sure you want to delete ${name} ?`);
+            if (confirmDelete) {
+                $.ajax({
+                    url: `/admin/admin-delete-product/${id}`,
+                    type: 'GET',
+                    success: function (result) {
+                        // handle success response
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        // handle error response
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+        });
+    });
+
     $(document).ready(function () {
         $('#productManagementTable').DataTable();
     });
