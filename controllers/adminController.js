@@ -74,20 +74,20 @@ const adminController = {
   adminProductManagement: async (req, res, next) => {
     let categoryList = await adminHelpers.getAllCategory();
 
-    adminHelpers.getAllProducts().then((productList) => {
-      productList.forEach(async (element) => {
-        let categoryName = await adminHelpers.getCategory(element.Category);
-        if (categoryName) {
-          element.categoryName = categoryName.Category;
-        }
-      });
+    const productList = await adminHelpers.getAllProducts();
+    for (let i = 0; i < productList.length; i++) {
+      const element = productList[i];
+      const categoryName = await adminHelpers.getCategory(element.Category);
+      if (categoryName) {
+        element.categoryName = categoryName.Category;
+      }
+    }
 
-      res.render("admin/admin-product-management", {
-        admin_files: true,
-        admin: true,
-        productList,
-        categoryList,
-      });
+    res.render("admin/admin-product-management", {
+      admin_files: true,
+      admin: true,
+      productList,
+      categoryList,
     });
   },
 
