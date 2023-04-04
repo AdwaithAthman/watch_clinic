@@ -9,7 +9,7 @@ Hosted in AWS. Used Nginx as proxy server and also as a load balancer.
 
 
 
-![Logo](https://www.watchclinic.tech/users/img/logo.png)
+![Logo](https://i.imgur.com/ChAQSDQ.png)
 
 
 ## Installation
