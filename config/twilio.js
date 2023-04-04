@@ -2,9 +2,9 @@ var db = require("../config/connection");
 var collection = require("../config/collections");
 
 const config = {
-  authToken: process.env.authToken,
-  accountSID: process.env.accountSID,
-  serviceSID: process.env.serviceSID,
+  authToken: process.env.AUTH_TOKEN,
+  accountSID: process.env.ACCOUNT_SID,
+  serviceSID: process.env.SERVICE_SID,
 };
 
 const client = require("twilio")(config.accountSID, config.authToken);

@@ -7,13 +7,13 @@ const paypal = require("paypal-rest-sdk");
 
 paypal.configure({
   mode: "sandbox", //sandbox or live
-  client_id: process.env.client_id_paypal,
-  client_secret: process.env.client_secret_paypal,
+  client_id: process.env.CLIENT_ID_PAYPAL,
+  client_secret: process.CLIENT_SECRET_PAYPAL,
 });
 
 var instance = new Razorpay({
-  key_id: process.env.key_id_rzp,
-  key_secret: process.env.key_secret_rzp,
+  key_id: process.env.KEY_ID_RZP,
+  key_secret: process.env.KEY_SECRET_RZP,
 });
 
 module.exports = {
