@@ -584,12 +584,14 @@ const userController = {
       if (req.query.query && req.query.results) {
         const query = req.query.query;
         const results = JSON.parse(req.query.results);
-        results.forEach(async (element) => {
-          let categoryName = await adminHelpers.getCategory(element.Category);
+
+        for (let i = 0; i < results.length; i++) {
+          const element = results[i];
+          const categoryName = await adminHelpers.getCategory(element.Category);
           if (categoryName) {
             element.categoryName = categoryName.Category;
           }
-        });
+        }
 
         if (user) {
           cartCount = await cartHelpers.getCartCount(user._id);
@@ -639,12 +641,13 @@ const userController = {
           });
         }
       } else {
-        products.forEach(async (element) => {
-          let categoryName = await adminHelpers.getCategory(element.Category);
+        for (let i = 0; i < products.length; i++) {
+          const element = products[i];
+          const categoryName = await adminHelpers.getCategory(element.Category);
           if (categoryName) {
             element.categoryName = categoryName.Category;
           }
-        });
+        }
 
         if (user) {
           cartCount = await cartHelpers.getCartCount(user._id);
