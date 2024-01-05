@@ -6,6 +6,8 @@ Watch Clinic is an ecommerce website for buying and selling watches. It is built
 Hosted in AWS. Used Nginx as proxy server and also as a load balancer.
 <br>
 <a href="https://watchclinic.tech" target="_blank" style="display: inline-block; background-color: #4CAF50; color: white; padding: 12px 24px; text-align: center; text-decoration: none; border-radius: 4px; font-size: 16px; margin: 2px 2px; cursor: pointer;"><strong>Link</strong></a>
+<a href="https://www.linkedin.com/posts/adwaith-athman_ecommercewebsite-nodejs-mongodb-activity-7149031019633946624-Gy-J?utm_source=share&utm_medium=member_desktop">
+<strong>Demo</strong></a>
 
 
 
